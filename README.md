@@ -1,4 +1,4 @@
-# Joao Araujo - Portfolio
+# Joao Araujo
 
 Welcome to my professional portfolio repository! 🌐 Here, you'll find the source code for my online portfolio showcasing my skills, experiences, and certifications as a SysAdmin, DevOps Engineer, and Cloud Computing enthusiast.
 

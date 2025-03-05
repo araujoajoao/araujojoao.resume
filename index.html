@@ -124,10 +124,12 @@
     .contact-info {
       text-align: center;
       margin: 20px 0;
+      font-size: 0.9em; /* Smaller font size */
     }
 
     .contact-info p {
-      margin: 5px 0;
+      margin: 0;
+      display: inline-block; /* Display all contact info in one line */
     }
 
     .contact-info a {
@@ -140,10 +142,8 @@
       color: #005bb5;
     }
 
-    .contact-line {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
+    .contact-info span {
+      margin: 0 10px; /* Add spacing between contact items */
     }
   </style>
 </head>
@@ -155,14 +155,15 @@
 
   <!-- Contact Information -->
   <div class="contact-info">
-    <div class="contact-line">
-      <p><strong>Email:</strong> <a href="mailto:araujoaojoao@gmail.com">araujoaojoao@gmail.com</a></p>
-      <p><strong>Phone:</strong> +55 54 996277371</p>
-    </div>
-    <div class="contact-line">
-      <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/araujojoao84" target="_blank">LinkedIn Profile</a></p>
-      <p><strong>GitHub:</strong> <a href="https://github.com/araujoajoao" target="_blank">GitHub Profile</a></p>
-    </div>
+    <p>
+      <strong></strong> <a href="mailto:araujoaojoao@gmail.com">araujoaojoao@gmail.com</a>
+      <span>|</span>
+      <strong></strong> +55 54 996277371
+      <span>|</span>
+      <strong></strong> <a href="https://www.linkedin.com/in/araujojoao84" target="_blank">LinkedIn Profile</a>
+      <span>|</span>
+      <strong></strong> <a href="https://github.com/araujoajoao" target="_blank">GitHub Profile</a>
+    </p>
   </div>
 
   <!-- About Me -->

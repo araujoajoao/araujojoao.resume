@@ -6,16 +6,15 @@
     <meta name="description" content="Joao Araujo - SysAdmin, DevOps, SRE, and Cloud Computing professional portfolio">
     <meta name="author" content="Joao Araujo">
     <meta name="keywords" content="DevOps, Cloud Computing, Big Data, Kubernetes, Python, Terraform, CI/CD">
-    <title>Joao Araujo - SysAdmin | DevOps | SRE | Cloud Computing</title>
+    <title>Joao Araujo - DevOps & Cloud Engineer</title>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <style>
         :root {
             --primary-color: #0078D7;
-            --secondary-color: #f4f4f9;
-            --text-color: #333;
-            --header-bg: #1E1E2F;
-            --header-text: #fff;
-            --card-bg: #fff;
-            --shadow-color: rgba(0, 0, 0, 0.1);
+            --secondary-color: #1E1E2F;
+            --text-color: #fff;
+            --card-bg: rgba(255, 255, 255, 0.1);
+            --shadow-color: rgba(0, 0, 0, 0.3);
         }
 
         * {
@@ -26,102 +25,51 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.8;
-            background-color: var(--secondary-color);
+            background: linear-gradient(135deg, #121212, #232323);
             color: var(--text-color);
             padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
         }
 
         .header {
-            text-align: center;
-            margin-bottom: 40px;
-            background-color: var(--header-bg);
-            color: var(--header-text);
-            padding: 20px;
-            border-radius: 10px;
+            background-color: var(--secondary-color);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px var(--shadow-color);
             position: relative;
-            overflow: hidden;
-        }
-
-        .header::after {
-            content: '';
-            position: absolute;
-            top: -50px;
-            right: -50px;
-            width: 150px;
-            height: 150px;
-            background-color: var(--primary-color);
-            border-radius: 50%;
-            opacity: 0.3;
         }
 
         .header h1 {
-            margin: 0;
             font-size: 2.5em;
         }
 
         .header p {
-            margin: 5px 0;
-        }
-
-        .header a {
-            color: var(--primary-color);
-            text-decoration: none;
-        }
-
-        .header a:hover {
-            text-decoration: underline;
+            opacity: 0.9;
         }
 
         .section {
-            background-color: var(--card-bg);
-            border-radius: 10px;
+            background: var(--card-bg);
             padding: 20px;
-            margin-bottom: 40px;
-            box-shadow: 0 4px 6px var(--shadow-color);
+            margin-top: 20px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 8px var(--shadow-color);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .section:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 12px var(--shadow-color);
+            box-shadow: 0 8px 16px var(--shadow-color);
         }
 
         .section h2 {
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            font-size: 1.5em;
             color: var(--primary-color);
-            position: relative;
-        }
-
-        .section h2::before {
-            content: '\1F680';
-            margin-right: 10px;
-        }
-
-        ul {
-            list-style-type: none;
-            padding-left: 0;
-        }
-
-        ul li {
             margin-bottom: 10px;
-            position: relative;
-            padding-left: 25px;
-        }
-
-        ul li::before {
-            content: '\2713';
-            position: absolute;
-            left: 0;
-            color: var(--primary-color);
-        }
-
-        .summary-keywords {
-            font-weight: bold;
-            color: #555;
         }
 
         .floating-button {
@@ -132,7 +80,7 @@
             color: white;
             padding: 15px;
             border-radius: 50%;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
             border: none;
             font-size: 1.5em;
             cursor: pointer;
@@ -143,28 +91,6 @@
             transform: scale(1.1);
             box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
         }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        .section {
-            animation: fadeIn 1s;
-        }
-
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2em;
-            }
-            .section {
-                padding: 15px;
-            }
-        }
     </style>
     <script>
         function scrollToTop() {
@@ -173,80 +99,51 @@
     </script>
 </head>
 <body>
-    <div class="header">
-        <h1>Joao Araujo</h1>
-        <p>SysAdmin | DevOps | SRE | Cloud Computing 🌐</p>
-        <p>📞 +55 54 996277371 | ✉️ <a href="mailto:araujoaojoao@gmail.com">araujoaojoao@gmail.com</a></p>
-        <p><a href="https://www.linkedin.com/in/araujojoao84">https://www.linkedin.com/in/araujojoao84</a></p>
-        <p><a href="https://github.com/araujoajoao">https://github.com/araujoajoao</a></p>
+    <div class="container">
+        <div class="header">
+            <h1>Joao Araujo</h1>
+            <p>SysAdmin | DevOps | SRE | Cloud Computing 🌐</p>
+            <p>📞 +55 54 996277371 | ✉️ <a href="mailto:araujoaojoao@gmail.com">araujoaojoao@gmail.com</a></p>
+            <p><a href="https://www.linkedin.com/in/araujojoao84">LinkedIn</a> | <a href="https://github.com/araujoajoao">GitHub</a></p>
+        </div>
+        
+        <div class="section">
+            <h2>Summary</h2>
+            <p>💼 <strong>DevOps Engineer | Cloud & Big Data</strong></p>
+            <p>Expert in cloud platforms (OCI, GCP, AWS), Kubernetes, Terraform, CI/CD, and automation.</p>
+        </div>
+
+        <div class="section">
+            <h2>Skills</h2>
+            <ul>
+                <li>🛠️ Big Data: Cloudera, Apache Hive, Spark</li>
+                <li>☁️ Cloud: GCP, OCI, AWS</li>
+                <li>💻 Coding: Python, Bash</li>
+                <li>📦 Containers: Docker, Kubernetes</li>
+                <li>🔄 CI/CD: Jenkins, Azure Pipelines</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Experience</h2>
+            <h3>2RP Net - DevOps Assistant</h3>
+            <p>📅 May 2022 - Nov 2024</p>
+            <ul>
+                <li>🚀 Cloud migration from Oracle OCI to GCP</li>
+                <li>🔧 Troubleshooting Cloudera and Big Data environments</li>
+                <li>📊 Monitoring & automation with Python and Bash</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Education</h2>
+            <ul>
+                <li>🎓 Postgraduate in Cloud Computing, UNAMA (2024)</li>
+                <li>🎓 CST DevOps, UNOPAR (2022-2024)</li>
+            </ul>
+        </div>
     </div>
 
-    <div class="section">
-        <h2>Summary</h2>
-        <p>💼 <strong>DevOps Engineer | Cloud & Big Data</strong></p>
-        <p>
-            Experienced in managing and configuring big data environments on OCI and GCP, proficient in Cloudera Hadoop, Apache Hive, NiFi, Spark, Airflow, Superset, and Zeppelin.
-        </p>
-        <p>
-            Passionate about advancing my knowledge in DevOps, SRE, and cloud engineering.
-        </p>
-        <p class="summary-keywords">
-            𝗞𝗲𝘆𝘄𝗼𝗿𝗱𝘀: DevOps | Cloud Computing | Automation | GCP | CI/CD | Docker | Terraform | Kubernetes
-        </p>
-    </div>
-
-    <div class="section">
-        <h2>Experience</h2>
-        <h3>2RP Net - DevOps Assistant</h3>
-        <p><em>📅 May 2022 - November 2024 (2 years 7 months)</em></p>
-        <ul>
-            <li>🚀 Participated in cloud migration from Oracle OCI to GCP.</li>
-            <li>🖥️ Managed Linux-based cloud servers.</li>
-            <li>🔧 Troubleshot Big Data environments with Cloudera services.</li>
-            <li>📊 Documented troubleshooting processes and implemented monitoring tools.</li>
-            <li>📂 Leveraged Git, GitHub, and Azure for CI/CD pipelines.</li>
-            <li>⚙️ Automated workflows using Python and Bash.</li>
-            <li>📦 Orchestrated containers using Docker and Kubernetes.</li>
-        </ul>
-    </div>
-
-    <div class="section">
-        <h2>Skills</h2>
-        <ul>
-            <li>🛠️ Big Data Tools: Cloudera, Apache Hive, NiFi, Spark</li>
-            <li>☁️ Cloud Platforms: GCP, OCI, AWS</li>
-            <li>💻 Programming: Python, Bash</li>
-            <li>🔄 CI/CD Tools: Jenkins, Azure Pipelines, Cloud Build</li>
-            <li>📦 Containerization: Docker, Kubernetes</li>
-            <li>📂 Version Control: Git, GitHub, Bitbucket, Azure Repos</li>
-        </ul>
-    </div>
-
-    <div class="section">
-        <h2>Education</h2>
-        <ul>
-            <li><strong>🎓 Postgraduate Degree in Cloud Computing</strong>, Universidade da Amazônia - UNAMA (March 2024 - November 2024)</li>
-            <li><strong>🎓 CST DevOps</strong>, UNOPAR (January 2022 - January 2024)</li>
-        </ul>
-    </div>
-
-    <div class="section">
-        <h2>Courses</h2>
-        <ul>
-            <li>📜 CCNA</li>
-            <li>📜 Kubernetes Basics</li>
-            <li>📜 DevOps Learning Paths</li>
-            <li>📜 Jenkins Basics</li>
-            <li>📜 Python Basics</li>
-        </ul>
-    </div>
-
-    <div class="section">
-        <h2>Languages</h2>
-        <ul>
-            <li>🇧🇷 Português (Native)</li>
-            <li>🇺🇸 English (Professional Working)</li>
-        </ul>
-    </div>
+    <button class="floating-button" onclick="scrollToTop()">⬆</button>
 </body>
 </html>

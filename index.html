@@ -5,70 +5,167 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>João Araujo | DevOps Engineer</title>
   <style>
+    /* General Styles */
     body {
       font-family: 'Open Sans', sans-serif;
       line-height: 1.6;
       margin: 0;
       padding: 0;
-      color: #333;
-      background-color: #f9f9f9;
+      color: #f5f5f7;
+      background-color: #1c1c1e;
+      transition: background-color 0.5s ease, color 0.5s ease;
     }
+
     header {
-      background: #0073e6;
+      background: #000;
       color: #fff;
       padding: 20px 0;
       text-align: center;
+      transition: background-color 0.5s ease;
     }
+
     header h1 {
       margin: 0;
       font-size: 2.5em;
+      transition: color 0.5s ease;
     }
+
     header p {
       margin: 5px 0 0;
       font-size: 1.2em;
+      transition: color 0.5s ease;
     }
+
     section {
       padding: 20px;
       max-width: 800px;
       margin: 0 auto;
+      transition: background-color 0.5s ease;
     }
+
     h2 {
       color: #0073e6;
       border-bottom: 2px solid #0073e6;
       padding-bottom: 5px;
+      transition: color 0.5s ease, border-color 0.5s ease;
     }
+
     ul {
       list-style-type: none;
       padding: 0;
     }
+
     ul li {
-      background: #e0e0e0;
+      background: #2c2c2e;
       margin: 5px 0;
       padding: 10px;
       border-radius: 5px;
+      transition: background-color 0.3s ease, transform 0.3s ease;
     }
+
+    ul li:hover {
+      background: #3a3a3c;
+      transform: translateX(10px);
+    }
+
     footer {
-      background: #333;
+      background: #000;
       color: #fff;
       text-align: center;
       padding: 10px 0;
       margin-top: 20px;
+      transition: background-color 0.5s ease;
     }
+
     footer a {
       color: #0073e6;
       text-decoration: none;
+      transition: color 0.3s ease;
     }
+
     footer a:hover {
+      color: #005bb5;
       text-decoration: underline;
+    }
+
+    /* Smooth Scrolling */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    section {
+      animation: fadeIn 0.8s ease-out;
+    }
+
+    /* Hover Effects */
+    a {
+      color: #0073e6;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    a:hover {
+      color: #005bb5;
+    }
+
+    /* Contact Section */
+    .contact-info {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .contact-info p {
+      margin: 5px 0;
+    }
+
+    .contact-info a {
+      color: #0073e6;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-info a:hover {
+      color: #005bb5;
+    }
+
+    .contact-line {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
     }
   </style>
 </head>
 <body>
   <header>
     <h1>João Araujo</h1>
-    <p>DevOps Engineer | Cloud Architect | SRE</p>
+    <p>DevOps Engineer | Cloud Architect | SRE | SysAdmin</p>
   </header>
 
+  <!-- Contact Information -->
+  <div class="contact-info">
+    <div class="contact-line">
+      <p><strong>Email:</strong> <a href="mailto:araujoaojoao@gmail.com">araujoaojoao@gmail.com</a></p>
+      <p><strong>Phone:</strong> +55 54 996277371</p>
+    </div>
+    <div class="contact-line">
+      <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/araujojoao84" target="_blank">LinkedIn Profile</a></p>
+      <p><strong>GitHub:</strong> <a href="https://github.com/araujoajoao" target="_blank">GitHub Profile</a></p>
+    </div>
+  </div>
+
+  <!-- About Me -->
   <section id="about">
     <h2>About Me</h2>
     <p>
@@ -82,6 +179,7 @@
     </p>
   </section>
 
+  <!-- Skills -->
   <section id="skills">
     <h2>Technical Skills</h2>
     <ul>
@@ -96,6 +194,7 @@
     </ul>
   </section>
 
+  <!-- Experience -->
   <section id="experience">
     <h2>Professional Experience</h2>
     <h3>2RP Net | DevOps | SRE | SysAdmin | DBA</h3>
@@ -111,6 +210,7 @@
     </ul>
   </section>
 
+  <!-- Education -->
   <section id="education">
     <h2>Education</h2>
     <ul>
@@ -121,17 +221,19 @@
     </ul>
   </section>
 
+  <!-- Certifications -->
   <section id="certifications">
     <h2>Courses</h2>
     <ul>
       <li>Trilha DevOps</li>
       <li>CCNAv7: Introduction to Networks</li>
       <li>Desafio Docker, Kubernetes, AWS, Grafana & Prometheus</li>
-      <li>Network Basics & Network Security (Cisco)/li>
-      <li>Terraform Essentials (LINUXtips)/li>
+      <li>Network Basics & Network Security (Cisco)</li>
+      <li>Terraform Essentials (LINUXtips)</li>
     </ul>
   </section>
 
+  <!-- Projects -->
   <section id="projects">
     <h2>Projects</h2>
     <ul>
@@ -145,12 +247,7 @@
   </section>
 
   <footer>
-    <h2>Contact</h2>
-    <p><strong>Email:</strong> araujoaojoao@gmail.com</p>
-    <p><strong>Phone:</strong> +55 54 996277371</p>
-    <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/araujojoao84" target="_blank">LinkedIn Profile</a></p>
-    <p><strong>GitHub:</strong> <a href="https://araujoaojoao.github.io/" target="_blank">GitHub Profile</a></p>
-    <p><strong>Resume:</strong> <a href="https://araujoao.resume/" target="_blank">Download Resume</a></p>
+    <p>&copy; 2025 João Araujo. All rights reserved.</p>
   </footer>
 </body>
 </html>

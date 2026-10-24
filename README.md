@@ -1,14 +1,125 @@
-# Joao Araujo
+<div align="center">
 
-Welcome to my professional portfolio repository! 🌐 Here, you'll find the source code for my online portfolio showcasing my skills, experiences, and certifications as a SysAdmin, DevOps Engineer, and Cloud Computing enthusiast.
+# João Araujo
+### **DevOps & Observability Engineer | Cloud Architect | SRE**
 
+[![Deploy to GitHub Pages](https://github.com/araujoajoao/araujojoao.resume/actions/workflows/deploy.yml/badge.svg)](https://github.com/araujoajoao/araujojoao.resume/actions/workflows/deploy.yml)
+[![Live Website](https://img.shields.io/badge/Live_Portfolio-araujoajoao.resume-06b6d4?style=flat-square&logo=googlechrome&logoColor=white)](https://araujoajoao.github.io/araujojoao.resume/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
+[![Location](https://img.shields.io/badge/Location-Brazil%20(Remote)-10b981?style=flat-square&logo=googlemaps&logoColor=white)](https://araujoajoao.github.io/araujojoao.resume/)
 
-## 🌟 About Me
-I am a **DevOps Engineer** with over 2.5 years of experience in managing cloud environments, big data platforms, and automating workflows. Currently pursuing a postgraduate degree in Cloud Computing, I am passionate about contributing to innovative and impactful projects.
+<p align="center">
+  <a href="https://araujoajoao.github.io/araujojoao.resume/"><b>🌐 View Live Portfolio</b></a> •
+  <a href="#-technical-stack"><b>🛠 Tech Stack</b></a> •
+  <a href="#-featured-projects"><b>🚀 Projects</b></a> •
+  <a href="#-local-development"><b>💻 Run Locally</b></a> •
+  <a href="#-contact--networking"><b>📬 Contact</b></a>
+</p>
 
-## 📬 Contact
-- **Email:** [araujojoao@gmail.com](mailto:araujojoao@gmail.com)
-- **LinkedIn:** [linkedin.com/in/araujojoao84](https://www.linkedin.com/in/araujojoao84)
-- **GitHub:** [github.com/araujoajoao](https://github.com/araujoajoao)
+```
+  ____             ___                     _       
+ |  _ \  _____   _/ _ \ _ __  ___         / \   _ __ __ _ _   _ (_) ___  
+ | | | |/ _ \ \ / / | | | '_ \/ __| _____ / _ \ | '__/ _` | | | || |/ _ \ 
+ | |_| |  __/\ V /| |_| | |_) \__ \_____/ ___ \| | | (_| | |_| || | (_) |
+ |____/ \___| \_/  \___/| .__/|___/     /_/   \_\_|  \__,_|\__,_|/ |\___/ 
+                        |_|                                     |__/      
+```
 
 ---
+
+</div>
+
+## 🌟 Executive Summary
+
+DevOps and Observability Engineer with **3+ years of enterprise experience** architecting high-reliability multi-cloud infrastructure (**GCP, AWS, OCI**), automated CI/CD pipelines, container orchestration (**Kubernetes, Docker**), and distributed Big Data platforms (**Cloudera, Spark, Hive, NiFi, Airflow**).
+
+Specialized in end-to-end **Observability & SRE** (Datadog APM, Prometheus, Grafana, custom monitors, SLIs/SLOs) and Infrastructure as Code (**Terraform, Ansible**). Holding a postgraduate degree in **Cloud Computing** from UNAMA.
+
+---
+
+## 🛠 Technical Stack
+
+<div align="center">
+
+| Domain | Technologies & Frameworks |
+| :--- | :--- |
+| **Observability & SRE** | `Datadog` `Prometheus` `Grafana` `Alertmanager` `Cloudera Manager` `SRE / SLIs / SLOs` |
+| **Cloud Platforms** | `Google Cloud Platform (GCP)` `Amazon Web Services (AWS)` `Oracle Cloud (OCI)` |
+| **Containers & Orchestration** | `Kubernetes (K8s)` `Docker` `Helm` `Horizontal Pod Autoscaling (HPA)` |
+| **Infrastructure as Code** | `Terraform` `Ansible` `Shell Automation` `GitOps` |
+| **Big Data & DBA** | `Cloudera Hadoop` `Apache Spark / PySpark` `Apache Hive` `Apache NiFi` `Airflow` `DBA` |
+| **CI/CD & DevSecOps** | `Azure DevOps Pipelines` `Google Cloud Build` `SonarQube` `GitHub Actions` |
+| **Scripting & OS** | `Python` `Bash / Shell` `SQL` `Linux (RedHat, Debian, Ubuntu)` |
+
+</div>
+
+---
+
+## 🚀 Featured Projects & Labs
+
+* **[Datadog Observability Engineering Stack](https://github.com/araujoajoao/DatadogK8sDeploy)**: Production-grade Kubernetes observability implementation with Datadog DaemonSet agents, cluster checks, monitors, log pipelines, APM distributed tracing, and synthetic tests.
+* **[Dynamic Autoscaling & Workload Management](https://github.com/araujoajoao/autoscale-example)**: Cloud-native autoscaling framework demonstrating horizontal pod autoscaling (HPA), workload traffic simulation, and compute optimization.
+* **Enterprise CI/CD & DevSecOps Pipeline**: Azure DevOps Pipelines and Google Cloud Build workflows with SonarQube automated static analysis and container image scanning.
+* **Distributed Big Data Platform & Data Lakehouse**: Cloudera Hadoop ecosystem administration with Hive warehouses, Apache NiFi pipelines, and PySpark batch routines with fine-tuned YARN resource queues.
+
+---
+
+## 💻 Repository Structure & Local Development
+
+This repository hosts João Araujo's live online interactive portfolio and print-ready ATS resume:
+
+```bash
+araujojoao.resume/
+├── .github/
+│   └── workflows/
+│       ├── deploy.yml     # Automated GitHub Pages CI/CD deployment
+│       └── ci.yml         # HTML validation and syntax check
+├── index.html             # Ultra-fast, responsive web resume & ATS print stylesheet
+├── README.md              # Repository overview and profile showcase
+├── robots.txt             # Search crawler directives
+├── sitemap.xml            # SEO sitemap index
+├── LICENSE                # MIT Open Source License
+└── .gitignore             # Git ignore definitions
+```
+
+### 🏃 Running Locally
+
+Since the project is built with clean Vanilla HTML5, CSS3, and JavaScript, you can run it immediately with zero dependency installation:
+
+```bash
+# Option 1: Using Python 3 built-in server
+python3 -m http.server 8000
+
+# Option 2: Using npx serve
+npx serve .
+
+# Option 3: Simply open in your default browser
+open index.html
+```
+
+Visit `http://localhost:8000` to view the portfolio.
+
+---
+
+## 🖨 Print & PDF Export Feature
+
+The portfolio includes a dedicated **`@media print` stylesheet**:
+* Clicking **"Print CV"** or pressing <kbd>Cmd</kbd>+<kbd>P</kbd> / <kbd>Ctrl</kbd>+<kbd>P</kbd> renders an ink-saving, black-and-white, executive-formatted 2-page ATS resume.
+* Unnecessary web elements (navigation bars, background meshes, theme toggles) are cleanly excluded.
+
+---
+
+## 📬 Contact & Networking
+
+Feel free to connect or discuss opportunities:
+
+* **Email:** [araujoaojoao@gmail.com](mailto:araujoaojoao@gmail.com)
+* **WhatsApp:** [+55 54 99627-7371](https://wa.me/5554996277371)
+* **LinkedIn:** [linkedin.com/in/araujojoao84](https://www.linkedin.com/in/araujojoao84/)
+* **GitHub:** [github.com/araujoajoao](https://github.com/araujoajoao)
+
+---
+
+<div align="center">
+  <sub>© 2026 João Araujo. Released under the <a href="LICENSE">MIT License</a>.</sub>
+</div>

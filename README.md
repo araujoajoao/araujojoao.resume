@@ -22,10 +22,10 @@
 <a id="summary"></a>
 ## 🌟 Executive Summary
 
-DevOps and Observability Engineer with **3+ years of enterprise experience** architecting high-reliability multi-cloud infrastructure (**GCP, AWS, OCI**), automated CI/CD pipelines, container orchestration (**Kubernetes, Docker**), and distributed Big Data platforms (**Cloudera, Spark, Hive, NiFi, Airflow**).
+DevOps and Observability Engineer with **4+ years of enterprise experience** architecting high-reliability multi-cloud infrastructure (**GCP, AWS, OCI**), automated CI/CD pipelines, container orchestration (**Kubernetes, Docker**), and distributed Big Data platforms (**Cloudera, Spark, Hive, NiFi, Airflow**).
 
 * **Observability Engineer** at **Appoena** (Mar 2025 – Present · 1 yr 8 mos · Barueri, SP · Remote): System reliability & availability, end-to-end Datadog observability (metrics, logs, traces), Kubernetes & Docker monitoring, multi-cloud projects (AWS, GCP, Azure), and automation scripts.
-* **DevOps Engineer | SRE | SysAdmin | DBA** at **2RP Net** (May 2022 – Nov 2024): Enterprise cloud reliability across GCP & OCI, automated Azure DevOps/Cloud Build pipelines, Cloudera Hadoop administration, and PySpark monitoring.
+* **DevOps Engineer | SysAdmin | DBA** at **2RP Net** (May 2022 – Nov 2024): Enterprise cloud reliability across GCP & OCI, automated Azure DevOps/Cloud Build pipelines, Cloudera Hadoop administration, and PySpark monitoring.
 
 Specialized in end-to-end **Observability & SRE** (Datadog APM, Prometheus, Grafana, custom monitors, SLIs/SLOs) and Infrastructure as Code (**Terraform, Ansible**). Holding a postgraduate degree in **Cloud Computing** from UNAMA.
 

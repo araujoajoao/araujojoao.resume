@@ -481,16 +481,17 @@
     .contact-pill {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.65rem;
       background: var(--bg-surface-elevated);
       border: 1px solid var(--border-subtle);
       color: var(--text-secondary);
-      padding: 0.45rem 0.85rem;
-      border-radius: var(--radius-full);
-      font-size: 0.86rem;
+      padding: 0.5rem 0.95rem;
+      border-radius: var(--radius-md);
+      font-size: 0.88rem;
       font-weight: 500;
       text-decoration: none;
       transition: all var(--transition-fast);
+      cursor: pointer;
     }
 
     .contact-pill:hover {
@@ -498,6 +499,7 @@
       border-color: var(--accent-cyan);
       background: var(--bg-card-hover);
       transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(6, 182, 212, 0.15);
     }
 
     .contact-pill svg {
@@ -1120,15 +1122,15 @@
     .badge-lock {
       display: inline-flex;
       align-items: center;
-      gap: 0.25rem;
-      font-size: 0.72rem;
+      gap: 0.35rem;
+      font-size: 0.74rem;
       font-weight: 700;
-      padding: 0.2rem 0.55rem;
-      border-radius: var(--radius-full);
-      background: rgba(6, 182, 212, 0.18);
+      padding: 0.22rem 0.65rem;
+      border-radius: var(--radius-sm);
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.18), rgba(99, 102, 241, 0.18));
       color: var(--accent-cyan);
-      border: 1px solid rgba(6, 182, 212, 0.35);
-      margin-left: 0.35rem;
+      border: 1px solid rgba(6, 182, 212, 0.4);
+      margin-left: 0.4rem;
       transition: all var(--transition-fast);
       letter-spacing: 0.02em;
       cursor: pointer;
@@ -1136,10 +1138,11 @@
 
     .contact-pill:hover .badge-lock,
     .badge-lock:hover {
-      background: rgba(6, 182, 212, 0.32);
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.35), rgba(99, 102, 241, 0.35));
       border-color: var(--accent-cyan);
+      color: #ffffff;
       box-shadow: 0 0 12px rgba(6, 182, 212, 0.45);
-      transform: scale(1.05);
+      transform: scale(1.04);
     }
 
     .badge-lock.revealed {
@@ -1151,29 +1154,33 @@
 
     .contact-pill:hover .badge-lock.revealed,
     .badge-lock.revealed:hover {
+      background: rgba(16, 185, 129, 0.28);
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.35);
       transform: none;
-      box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
     }
 
-    /* Modal Overlay & Card */
+    /* Modal Overlay & Card - robust visibility pattern */
     .modal-overlay {
       position: fixed;
       inset: 0;
       background: rgba(9, 13, 22, 0.85);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      display: none;
+      display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 1000;
+      z-index: 10000;
       padding: 1.25rem;
       opacity: 0;
-      transition: opacity 0.25s ease;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.22s ease, visibility 0.22s ease;
     }
 
     .modal-overlay.open {
-      display: flex;
       opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
     }
 
     .modal-card {
@@ -1718,22 +1725,34 @@
 
       <!-- Direct Contact Pills -->
       <div class="contact-pills">
-        <a href="#verifyModal" class="contact-pill contact-protected" id="emailPill" title="Clique para confirmar identidade e revelar e-mail">
+        <div class="contact-pill" id="emailPill" role="button" tabindex="0" title="Clique para revelar e copiar e-mail">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
             <polyline points="22,6 12,13 2,6"></polyline>
           </svg>
           <span id="emailPillText">araujo•••••@gmail.com</span>
-          <span class="badge-lock" id="emailLockBadge">🔒 Revelar</span>
-        </a>
+          <span class="badge-lock" id="emailLockBadge">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+            <span class="badge-lock-text">Revelar</span>
+          </span>
+        </div>
 
-        <a href="#verifyModal" class="contact-pill contact-protected" id="phonePill" title="Clique para confirmar identidade e revelar WhatsApp">
+        <div class="contact-pill" id="phonePill" role="button" tabindex="0" title="Clique para revelar WhatsApp">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
           </svg>
           <span id="phonePillText">+55 54 •••••-7371</span>
-          <span class="badge-lock" id="phoneLockBadge">🔒 Revelar</span>
-        </a>
+          <span class="badge-lock" id="phoneLockBadge">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+            <span class="badge-lock-text">Revelar</span>
+          </span>
+        </div>
 
         <a href="https://www.linkedin.com/in/araujojoao84/" target="_blank" rel="noopener noreferrer" class="contact-pill" title="LinkedIn Profile">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1762,7 +1781,7 @@
 
       <!-- Hero Actions -->
       <div class="hero-actions">
-        <a href="#verifyModal" class="btn btn-primary contact-protected" id="heroWhatsAppBtn">
+        <a href="https://wa.me/5554996277371" target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="heroWhatsAppBtn">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
           </svg>
@@ -2139,8 +2158,8 @@
           <div class="experience-card">
             <div class="exp-header">
               <div>
-                <h3 class="exp-role">DevOps &amp; SRE Engineer</h3>
-                <span class="exp-company">Tech Infrastructure · Full-time / Remote</span>
+                <h3 class="exp-role">Observability Engineer</h3>
+                <span class="exp-company">Appoena · Full-time (Remote)</span>
               </div>
               <div class="exp-date">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2149,12 +2168,12 @@
                   <line x1="8" y1="2" x2="8" y2="6"></line>
                   <line x1="3" y1="10" x2="21" y2="10"></line>
                 </svg>
-                <span>Nov 2024 - Present</span>
+                <span>Mar 2025 - Present</span>
               </div>
             </div>
 
             <p class="exp-summary">
-              Architecting cloud infrastructure automation, Kubernetes microservices reliability, and end-to-end observability. Designing GitOps delivery pipelines, multi-cloud IaC provisioning (Terraform, Ansible), and synthetic monitoring to sustain 99.9% service availability.
+              Focused on system reliability, performance, and availability across cloud and distributed environments. Architecting end-to-end observability solutions using Datadog, monitoring Kubernetes platforms, and automating multi-cloud resilience routines.
             </p>
 
             <ul class="achievement-list">
@@ -2163,7 +2182,7 @@
                   <polyline points="20 6 9 17 4 12"></polyline>
                 </svg>
                 <div>
-                  <strong>Observability &amp; SLI/SLO Governance:</strong> Implementing comprehensive observability architectures with Datadog, Prometheus, and OpenTelemetry, building executive latency/error dashboards, and setting automated alerts for proactive incident remediation.
+                  <strong>End-to-End Observability with Datadog:</strong> Designed and implemented comprehensive observability architectures covering custom metrics, log aggregation pipelines, and distributed APM tracing for high-throughput distributed microservices.
                 </div>
               </li>
               <li class="achievement-item">
@@ -2171,7 +2190,7 @@
                   <polyline points="20 6 9 17 4 12"></polyline>
                 </svg>
                 <div>
-                  <strong>Kubernetes &amp; Cloud Platform Engineering:</strong> Managing scalable Kubernetes clusters and Helm releases across GCP and AWS environments, enforcing zero-downtime rolling deployments, resource limits, and network policies.
+                  <strong>Kubernetes &amp; Container Infrastructure Reliability:</strong> Monitored and troubleshot Kubernetes and Docker environments, ensuring 99.9% platform stability, pod health, and rapid incident response (reduced MTTR).
                 </div>
               </li>
               <li class="achievement-item">
@@ -2179,7 +2198,7 @@
                   <polyline points="20 6 9 17 4 12"></polyline>
                 </svg>
                 <div>
-                  <strong>GitOps CI/CD Automation:</strong> Streamlining deployment pipelines with automated linting, security scans (SonarQube/Trivy), and automated release tagging, reducing deployment cycle times.
+                  <strong>Cross-Functional DevOps Collaboration:</strong> Worked closely with DevOps and infrastructure teams to support scalable, resilient, and highly available multi-cloud architectures.
                 </div>
               </li>
               <li class="achievement-item">
@@ -2187,23 +2206,31 @@
                   <polyline points="20 6 9 17 4 12"></polyline>
                 </svg>
                 <div>
-                  <strong>Infrastructure as Code (IaC):</strong> Standardizing modular Terraform templates and Ansible playbooks for repeatable, drift-free multi-environment provisioning and cloud cost optimization.
+                  <strong>Multi-Cloud Resilience (AWS, GCP, Azure):</strong> Contributed to cloud infrastructure projects across AWS, GCP, and Azure, significantly improving fault tolerance, resilience, and operational visibility.
+                </div>
+              </li>
+              <li class="achievement-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <div>
+                  <strong>Automation &amp; Toil Elimination:</strong> Developed and maintained automated scripts in Python and Bash to streamline day-to-day operations and eliminate repetitive manual toil.
                 </div>
               </li>
             </ul>
 
             <div class="tech-pill-list">
-              <span class="tech-pill">Kubernetes</span>
               <span class="tech-pill">Datadog</span>
-              <span class="tech-pill">Terraform</span>
-              <span class="tech-pill">GCP</span>
               <span class="tech-pill">AWS</span>
+              <span class="tech-pill">GCP</span>
+              <span class="tech-pill">Azure</span>
+              <span class="tech-pill">Terraform</span>
+              <span class="tech-pill">Kubernetes</span>
               <span class="tech-pill">Docker</span>
-              <span class="tech-pill">Helm</span>
-              <span class="tech-pill">CI/CD</span>
               <span class="tech-pill">Python</span>
               <span class="tech-pill">Bash</span>
-              <span class="tech-pill">GitOps</span>
+              <span class="tech-pill">GitLab</span>
+              <span class="tech-pill">Jira</span>
             </div>
           </div>
         </div>
@@ -2545,14 +2572,14 @@
           I'm actively open to DevOps Engineer, Observability Engineer, and Cloud Architect roles. Whether you want to discuss a full-time position, contract work, or cloud migration, feel free to reach out.
         </p>
         <div class="cta-actions">
-          <a href="#verifyModal" class="btn btn-primary contact-protected" id="ctaWhatsAppBtn">
+          <a href="https://wa.me/5554996277371" target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="ctaWhatsAppBtn">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
             </svg>
             <span id="ctaWhatsAppText">Message on WhatsApp</span>
           </a>
 
-          <a href="#verifyModal" class="btn btn-outline contact-protected" id="ctaEmailBtn">
+          <a href="mailto:araujoaojoao@gmail.com" class="btn btn-outline" id="ctaEmailBtn">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
               <polyline points="22,6 12,13 2,6"></polyline>
@@ -2627,7 +2654,7 @@
       <div class="footer-links">
         <a href="https://github.com/araujoajoao" target="_blank" rel="noopener noreferrer">GitHub</a>
         <a href="https://www.linkedin.com/in/araujojoao84/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-        <a href="#verifyModal" class="contact-protected" id="footerWhatsAppBtn" title="Revelar WhatsApp">WhatsApp</a>
+        <a href="https://wa.me/5554996277371" target="_blank" rel="noopener noreferrer">WhatsApp</a>
         <a href="#navbar">Back to Top ↑</a>
       </div>
     </div>
@@ -2749,16 +2776,11 @@
         });
       });
 
-      // 8. Identity Confirmation & Contact Unmasking
+      // 8. Contact Unmasking & Interactivity
       const FULL_EMAIL = 'araujoaojoao@gmail.com';
       const FULL_PHONE = '+55 54 99627-7371';
       const WHATSAPP_URL = 'https://wa.me/5554996277371';
       const MAILTO_URL = 'mailto:' + FULL_EMAIL;
-
-      const verifyModal = document.getElementById('verifyModal');
-      const modalCloseBtn = document.getElementById('modalCloseBtn');
-      const verifyForm = document.getElementById('verifyForm');
-      const humanCheck = document.getElementById('humanCheck');
 
       const emailPill = document.getElementById('emailPill');
       const emailPillText = document.getElementById('emailPillText');
@@ -2768,205 +2790,77 @@
       const phonePillText = document.getElementById('phonePillText');
       const phoneLockBadge = document.getElementById('phoneLockBadge');
 
-      const heroWhatsAppBtn = document.getElementById('heroWhatsAppBtn');
       const copyEmailBtn = document.getElementById('copyEmailBtn');
-      const ctaWhatsAppBtn = document.getElementById('ctaWhatsAppBtn');
-      const ctaEmailBtn = document.getElementById('ctaEmailBtn');
-      const footerWhatsAppBtn = document.getElementById('footerWhatsAppBtn');
 
-      let isVerified = sessionStorage.getItem('contact_verified') === 'true';
-      let pendingAction = null; // 'email' | 'whatsapp' | 'copy'
+      let isRevealed = sessionStorage.getItem('contact_verified') === 'true';
 
-      function openVerifyModal(action) {
-        pendingAction = action;
-        if (verifyModal) {
-          verifyModal.classList.add('open');
-          verifyModal.setAttribute('aria-hidden', 'false');
-        }
-      }
+      function applyRevealedState() {
+        isRevealed = true;
+        sessionStorage.setItem('contact_verified', 'true');
 
-      function closeVerifyModal() {
-        if (verifyModal) {
-          verifyModal.classList.remove('open');
-          verifyModal.setAttribute('aria-hidden', 'true');
-        }
-        pendingAction = null;
-      }
-
-      function applyVerifiedContacts() {
-        // Unmask Email
         if (emailPillText) emailPillText.textContent = FULL_EMAIL;
         if (emailLockBadge) {
-          emailLockBadge.textContent = '✓ Revelado';
+          emailLockBadge.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> <span class="badge-lock-text">Revelado</span>';
           emailLockBadge.classList.add('revealed');
         }
-        if (emailPill) {
-          emailPill.href = MAILTO_URL;
-          emailPill.target = '_self';
-          emailPill.title = 'Enviar e-mail para ' + FULL_EMAIL;
-        }
 
-        // Unmask Phone
         if (phonePillText) phonePillText.textContent = FULL_PHONE;
         if (phoneLockBadge) {
-          phoneLockBadge.textContent = '✓ Revelado';
+          phoneLockBadge.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> <span class="badge-lock-text">Revelado</span>';
           phoneLockBadge.classList.add('revealed');
         }
-        if (phonePill) {
-          phonePill.href = WHATSAPP_URL;
-          phonePill.target = '_blank';
-          phonePill.title = 'Abrir conversa no WhatsApp (' + FULL_PHONE + ')';
-        }
-
-        // Hero, CTA & Footer WhatsApp & Email
-        if (heroWhatsAppBtn) {
-          heroWhatsAppBtn.href = WHATSAPP_URL;
-          heroWhatsAppBtn.target = '_blank';
-        }
-        if (ctaWhatsAppBtn) {
-          ctaWhatsAppBtn.href = WHATSAPP_URL;
-          ctaWhatsAppBtn.target = '_blank';
-        }
-        if (ctaEmailBtn) {
-          ctaEmailBtn.href = MAILTO_URL;
-          ctaEmailBtn.target = '_self';
-        }
-        if (footerWhatsAppBtn) {
-          footerWhatsAppBtn.href = WHATSAPP_URL;
-          footerWhatsAppBtn.target = '_blank';
-        }
       }
 
-      if (isVerified) {
-        applyVerifiedContacts();
+      if (isRevealed) {
+        applyRevealedState();
       }
 
-      // Intercept clicks on protected contacts
       if (emailPill) {
-        emailPill.addEventListener('click', (e) => {
-          if (!isVerified) {
-            e.preventDefault();
-            openVerifyModal('email');
+        emailPill.addEventListener('click', () => {
+          if (!isRevealed) {
+            applyRevealedState();
+            navigator.clipboard.writeText(FULL_EMAIL).then(() => {
+              showToast('✅ E-mail revelado e copiado: ' + FULL_EMAIL);
+            }).catch(() => {
+              showToast('✅ E-mail revelado: ' + FULL_EMAIL);
+            });
+          } else {
+            window.location.href = MAILTO_URL;
           }
         });
-      }
-
-      if (emailLockBadge) {
-        emailLockBadge.addEventListener('click', (e) => {
-          if (!isVerified) {
+        emailPill.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
-            e.stopPropagation();
-            openVerifyModal('email');
+            emailPill.click();
           }
         });
       }
 
       if (phonePill) {
-        phonePill.addEventListener('click', (e) => {
-          if (!isVerified) {
-            e.preventDefault();
-            openVerifyModal('whatsapp');
+        phonePill.addEventListener('click', () => {
+          if (!isRevealed) {
+            applyRevealedState();
+            showToast('✅ WhatsApp revelado: ' + FULL_PHONE);
+          } else {
+            window.open(WHATSAPP_URL, '_blank');
           }
         });
-      }
-
-      if (phoneLockBadge) {
-        phoneLockBadge.addEventListener('click', (e) => {
-          if (!isVerified) {
+        phonePill.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
-            e.stopPropagation();
-            openVerifyModal('whatsapp');
-          }
-        });
-      }
-
-      if (footerWhatsAppBtn) {
-        footerWhatsAppBtn.addEventListener('click', (e) => {
-          if (!isVerified) {
-            e.preventDefault();
-            openVerifyModal('whatsapp');
-          }
-        });
-      }
-
-      if (heroWhatsAppBtn) {
-        heroWhatsAppBtn.addEventListener('click', (e) => {
-          if (!isVerified) {
-            e.preventDefault();
-            openVerifyModal('whatsapp');
-          }
-        });
-      }
-
-      if (ctaWhatsAppBtn) {
-        ctaWhatsAppBtn.addEventListener('click', (e) => {
-          if (!isVerified) {
-            e.preventDefault();
-            openVerifyModal('whatsapp');
-          }
-        });
-      }
-
-      if (ctaEmailBtn) {
-        ctaEmailBtn.addEventListener('click', (e) => {
-          if (!isVerified) {
-            e.preventDefault();
-            openVerifyModal('email');
+            phonePill.click();
           }
         });
       }
 
       if (copyEmailBtn) {
-        copyEmailBtn.addEventListener('click', (e) => {
-          if (!isVerified) {
-            e.preventDefault();
-            openVerifyModal('copy');
-          } else {
-            navigator.clipboard.writeText(FULL_EMAIL).then(() => {
-              showToast('Email ' + FULL_EMAIL + ' copiado!');
-            }).catch(() => {
-              showToast('Email: ' + FULL_EMAIL);
-            });
-          }
-        });
-      }
-
-      if (modalCloseBtn) {
-        modalCloseBtn.addEventListener('click', closeVerifyModal);
-      }
-
-      if (verifyModal) {
-        verifyModal.addEventListener('click', (e) => {
-          if (e.target === verifyModal) {
-            closeVerifyModal();
-          }
-        });
-      }
-
-      if (verifyForm) {
-        verifyForm.addEventListener('submit', (e) => {
-          e.preventDefault();
-          if (!humanCheck || !humanCheck.checked) {
-            showToast('Por favor, confirme que é um visitante humano.');
-            return;
-          }
-
-          isVerified = true;
-          sessionStorage.setItem('contact_verified', 'true');
-          applyVerifiedContacts();
-          closeVerifyModal();
-          showToast('✅ Identidade confirmada! Dados de contato revelados.');
-
-          // Execute pending original action
-          if (pendingAction === 'copy') {
-            navigator.clipboard.writeText(FULL_EMAIL).then(() => {
-              showToast('Email ' + FULL_EMAIL + ' copiado!');
-            });
-          } else if (pendingAction === 'whatsapp') {
-            window.open(WHATSAPP_URL, '_blank');
-          } else if (pendingAction === 'email') {
-            window.location.href = MAILTO_URL;
-          }
+        copyEmailBtn.addEventListener('click', () => {
+          applyRevealedState();
+          navigator.clipboard.writeText(FULL_EMAIL).then(() => {
+            showToast('Email ' + FULL_EMAIL + ' copiado!');
+          }).catch(() => {
+            showToast('Email: ' + FULL_EMAIL);
+          });
         });
       }
     })();

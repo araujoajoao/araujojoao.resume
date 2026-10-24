@@ -1,6 +1,9 @@
 # Ignorar tudo por padrão
 *
 
-# Permitir somente o index.html e o .gitignore
+# Permitir arquivos públicos essenciais do repositório
 !index.html
+!README.md
+!LICENSE
 !.gitignore
+

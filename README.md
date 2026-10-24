@@ -10,25 +10,17 @@
 
 <p align="center">
   <a href="https://araujoajoao.github.io/araujojoao.resume/"><b>🌐 View Live Portfolio</b></a> •
-  <a href="#-technical-stack"><b>🛠 Tech Stack</b></a> •
-  <a href="#-featured-projects"><b>🚀 Projects</b></a> •
-  <a href="#-local-development"><b>💻 Run Locally</b></a> •
-  <a href="#-contact--networking"><b>📬 Contact</b></a>
+  <a href="#summary"><b>🌟 About</b></a> •
+  <a href="#tech-stack"><b>🛠 Tech Stack</b></a> •
+  <a href="#projects"><b>🚀 Projects</b></a> •
+  <a href="#contact"><b>📬 Contact</b></a>
 </p>
-
-```
-  ____             ___                     _       
- |  _ \  _____   _/ _ \ _ __  ___         / \   _ __ __ _ _   _ (_) ___  
- | | | |/ _ \ \ / / | | | '_ \/ __| _____ / _ \ | '__/ _` | | | || |/ _ \ 
- | |_| |  __/\ V /| |_| | |_) \__ \_____/ ___ \| | | (_| | |_| || | (_) |
- |____/ \___| \_/  \___/| .__/|___/     /_/   \_\_|  \__,_|\__,_|/ |\___/ 
-                        |_|                                     |__/      
-```
 
 ---
 
 </div>
 
+<a id="summary"></a>
 ## 🌟 Executive Summary
 
 DevOps and Observability Engineer with **3+ years of enterprise experience** architecting high-reliability multi-cloud infrastructure (**GCP, AWS, OCI**), automated CI/CD pipelines, container orchestration (**Kubernetes, Docker**), and distributed Big Data platforms (**Cloudera, Spark, Hive, NiFi, Airflow**).
@@ -37,6 +29,7 @@ Specialized in end-to-end **Observability & SRE** (Datadog APM, Prometheus, Graf
 
 ---
 
+<a id="tech-stack"></a>
 ## 🛠 Technical Stack
 
 <div align="center">
@@ -55,18 +48,20 @@ Specialized in end-to-end **Observability & SRE** (Datadog APM, Prometheus, Graf
 
 ---
 
+<a id="projects"></a>
 ## 🚀 Featured Projects & Labs
 
 * **[Datadog Observability Engineering Stack](https://github.com/araujoajoao/DatadogK8sDeploy)**: Production-grade Kubernetes observability implementation with Datadog DaemonSet agents, cluster checks, monitors, log pipelines, APM distributed tracing, and synthetic tests.
 * **[Dynamic Autoscaling & Workload Management](https://github.com/araujoajoao/autoscale-example)**: Cloud-native autoscaling framework demonstrating horizontal pod autoscaling (HPA), workload traffic simulation, and compute optimization.
+* **[read_repos - Repository Analysis Tool](https://github.com/araujoajoao/read_repos)**: Python automation tool for inspecting repository architecture, dependencies, and code assets across projects.
+* **[script-imports - Automation & Scripting Suite](https://github.com/araujoajoao/script-imports)**: Collection of Python and Bash modules for environment automation, log parsing, and operational tasks.
 * **Enterprise CI/CD & DevSecOps Pipeline**: Azure DevOps Pipelines and Google Cloud Build workflows with SonarQube automated static analysis and container image scanning.
 * **Distributed Big Data Platform & Data Lakehouse**: Cloudera Hadoop ecosystem administration with Hive warehouses, Apache NiFi pipelines, and PySpark batch routines with fine-tuned YARN resource queues.
 
 ---
 
-## 💻 Repository Structure & Local Development
-
-This repository hosts João Araujo's live online interactive portfolio and print-ready ATS resume:
+<a id="repository-structure"></a>
+## 📁 Repository Structure
 
 ```bash
 araujojoao.resume/
@@ -82,33 +77,17 @@ araujojoao.resume/
 └── .gitignore             # Git ignore definitions
 ```
 
-### 🏃 Running Locally
-
-Since the project is built with clean Vanilla HTML5, CSS3, and JavaScript, you can run it immediately with zero dependency installation:
-
-```bash
-# Option 1: Using Python 3 built-in server
-python3 -m http.server 8000
-
-# Option 2: Using npx serve
-npx serve .
-
-# Option 3: Simply open in your default browser
-open index.html
-```
-
-Visit `http://localhost:8000` to view the portfolio.
-
 ---
 
 ## 🖨 Print & PDF Export Feature
 
 The portfolio includes a dedicated **`@media print` stylesheet**:
 * Clicking **"Print CV"** or pressing <kbd>Cmd</kbd>+<kbd>P</kbd> / <kbd>Ctrl</kbd>+<kbd>P</kbd> renders an ink-saving, black-and-white, executive-formatted 2-page ATS resume.
-* Unnecessary web elements (navigation bars, background meshes, theme toggles) are cleanly excluded.
+* Web elements (navigation bars, background meshes, theme toggles) are cleanly excluded.
 
 ---
 
+<a id="contact"></a>
 ## 📬 Contact & Networking
 
 Feel free to connect or discuss opportunities:

@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://araujoajoao.github.io/araujojoao.resume/sitemap.xml

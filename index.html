@@ -2769,11 +2769,14 @@
         });
       });
 
-      // 8. Contact Unmasking & Interactivity
+      // 8. Contact Unmasking & Inactivity Auto-Lock (1 minute)
       const FULL_EMAIL = 'araujoaojoao@gmail.com';
+      const MASKED_EMAIL = 'araujo•••••@gmail.com';
       const FULL_PHONE = '+55 54 99627-7371';
+      const MASKED_PHONE = '+55 54 •••••-7371';
       const WHATSAPP_URL = 'https://wa.me/5554996277371';
       const MAILTO_URL = 'mailto:' + FULL_EMAIL;
+      const INACTIVITY_TIMEOUT_MS = 60 * 1000; // 1 minute auto-lock
 
       const emailPill = document.getElementById('emailPill');
       const emailPillText = document.getElementById('emailPillText');
@@ -2785,39 +2788,123 @@
 
       const copyEmailBtn = document.getElementById('copyEmailBtn');
 
-      let isRevealed = sessionStorage.getItem('contact_verified') === 'true';
+      let isRevealed = false;
+      let lockTimer = null;
+      let lastActivityTime = Date.now();
 
-      function applyRevealedState() {
+      const LOCK_BADGE_HTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg> <span class="badge-lock-text">Revelar</span>';
+      const REVEALED_BADGE_HTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> <span class="badge-lock-text">Revelado</span>';
+
+      function lockContacts(showNotice = false) {
+        if (!isRevealed) return;
+        isRevealed = false;
+        sessionStorage.removeItem('contact_verified_at');
+        if (lockTimer) {
+          clearTimeout(lockTimer);
+          lockTimer = null;
+        }
+
+        if (emailPillText) emailPillText.textContent = MASKED_EMAIL;
+        if (emailLockBadge) {
+          emailLockBadge.innerHTML = LOCK_BADGE_HTML;
+          emailLockBadge.classList.remove('revealed');
+        }
+
+        if (phonePillText) phonePillText.textContent = MASKED_PHONE;
+        if (phoneLockBadge) {
+          phoneLockBadge.innerHTML = LOCK_BADGE_HTML;
+          phoneLockBadge.classList.remove('revealed');
+        }
+
+        if (showNotice && !document.hidden) {
+          showToast('🔒 Contatos protegidos novamente (1m sem atividade)');
+        }
+      }
+
+      function scheduleLockTimer(delayMs = INACTIVITY_TIMEOUT_MS) {
+        if (lockTimer) clearTimeout(lockTimer);
+        lockTimer = setTimeout(() => {
+          lockContacts(true);
+        }, delayMs);
+      }
+
+      function resetInactivityTimer() {
+        if (!isRevealed) return;
+        lastActivityTime = Date.now();
+        sessionStorage.setItem('contact_verified_at', lastActivityTime.toString());
+        scheduleLockTimer(INACTIVITY_TIMEOUT_MS);
+      }
+
+      function applyRevealedState(resetTimer = true) {
         isRevealed = true;
-        sessionStorage.setItem('contact_verified', 'true');
+        lastActivityTime = Date.now();
+        sessionStorage.setItem('contact_verified_at', lastActivityTime.toString());
 
         if (emailPillText) emailPillText.textContent = FULL_EMAIL;
         if (emailLockBadge) {
-          emailLockBadge.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> <span class="badge-lock-text">Revelado</span>';
+          emailLockBadge.innerHTML = REVEALED_BADGE_HTML;
           emailLockBadge.classList.add('revealed');
         }
 
         if (phonePillText) phonePillText.textContent = FULL_PHONE;
         if (phoneLockBadge) {
-          phoneLockBadge.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> <span class="badge-lock-text">Revelado</span>';
+          phoneLockBadge.innerHTML = REVEALED_BADGE_HTML;
           phoneLockBadge.classList.add('revealed');
+        }
+
+        if (resetTimer) {
+          scheduleLockTimer(INACTIVITY_TIMEOUT_MS);
         }
       }
 
-      if (isRevealed) {
-        applyRevealedState();
+      // Check existing session on load
+      const savedVerifiedAt = parseInt(sessionStorage.getItem('contact_verified_at') || '0', 10);
+      if (savedVerifiedAt && (Date.now() - savedVerifiedAt < INACTIVITY_TIMEOUT_MS)) {
+        applyRevealedState(false);
+        const remaining = INACTIVITY_TIMEOUT_MS - (Date.now() - savedVerifiedAt);
+        scheduleLockTimer(remaining);
+      } else {
+        sessionStorage.removeItem('contact_verified_at');
       }
+
+      // Track user interactions to keep alive while actively browsing
+      const userActivityEvents = ['mousemove', 'mousedown', 'keydown', 'touchstart', 'scroll'];
+      let activityThrottle = 0;
+      function onUserActivity() {
+        if (!isRevealed) return;
+        const now = Date.now();
+        if (now - activityThrottle < 1000) return; // at most once per second
+        activityThrottle = now;
+        resetInactivityTimer();
+      }
+      userActivityEvents.forEach(evt => {
+        window.addEventListener(evt, onUserActivity, { passive: true });
+      });
+
+      // Handle tab visibility and backgrounding
+      document.addEventListener('visibilitychange', () => {
+        if (!isRevealed) return;
+        if (!document.hidden) {
+          const elapsed = Date.now() - lastActivityTime;
+          if (elapsed >= INACTIVITY_TIMEOUT_MS) {
+            lockContacts(true);
+          } else {
+            scheduleLockTimer(INACTIVITY_TIMEOUT_MS - elapsed);
+          }
+        }
+      });
 
       if (emailPill) {
         emailPill.addEventListener('click', () => {
           if (!isRevealed) {
-            applyRevealedState();
+            applyRevealedState(true);
             navigator.clipboard.writeText(FULL_EMAIL).then(() => {
               showToast('✅ E-mail revelado e copiado: ' + FULL_EMAIL);
             }).catch(() => {
               showToast('✅ E-mail revelado: ' + FULL_EMAIL);
             });
           } else {
+            resetInactivityTimer();
             window.location.href = MAILTO_URL;
           }
         });
@@ -2832,9 +2919,10 @@
       if (phonePill) {
         phonePill.addEventListener('click', () => {
           if (!isRevealed) {
-            applyRevealedState();
+            applyRevealedState(true);
             showToast('✅ WhatsApp revelado: ' + FULL_PHONE);
           } else {
+            resetInactivityTimer();
             window.open(WHATSAPP_URL, '_blank');
           }
         });
@@ -2848,7 +2936,7 @@
 
       if (copyEmailBtn) {
         copyEmailBtn.addEventListener('click', () => {
-          applyRevealedState();
+          applyRevealedState(true);
           navigator.clipboard.writeText(FULL_EMAIL).then(() => {
             showToast('Email ' + FULL_EMAIL + ' copiado!');
           }).catch(() => {

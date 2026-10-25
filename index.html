@@ -2,7 +2,31 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#090d16">
+  
+  <!-- Instant Client & Device Detection (Executes before styles to prevent FOUC / layout shift) -->
+  <script>
+    (function () {
+      try {
+        var ua = navigator.userAgent || navigator.vendor || window.opera || '';
+        var plat = navigator.platform || '';
+        var touch = (navigator.maxTouchPoints > 0) || ('ontouchstart' in window);
+        var w = window.innerWidth || screen.width || 1024;
+        var isMobileUA = /Android.*Mobile|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini|Mobile/i.test(ua);
+        var isTabletUA = /iPad|Tablet|PlayBook|Silk/i.test(ua) || (plat === 'MacIntel' && touch);
+        var device = (isMobileUA || w < 768) ? 'mobile' : ((isTabletUA || (w <= 1024 && touch) || w <= 992) ? 'tablet' : 'desktop');
+        var os = /iPad|iPhone|iPod/.test(ua) || (plat === 'MacIntel' && touch) ? 'ios' : (/Android/.test(ua) ? 'android' : (/Mac/.test(plat) ? 'macos' : (/Win/.test(plat) ? 'windows' : (/Linux/.test(plat) ? 'linux' : 'other'))));
+        var el = document.documentElement;
+        el.setAttribute('data-device', device);
+        el.setAttribute('data-os', os);
+        el.setAttribute('data-touch', touch ? 'true' : 'false');
+        el.className = (el.className ? el.className + ' ' : '') + 'device-' + device + (touch ? ' is-touch' : '');
+      } catch (e) {}
+    })();
+  </script>
   <title>João Araújo | DevOps & Observability Engineer | Cloud Architect</title>
   
   <!-- SEO & Social Meta Tags -->
@@ -147,6 +171,11 @@
     html {
       scroll-behavior: smooth;
       font-size: 16px;
+      width: 100%;
+      max-width: 100vw;
+      overflow-x: hidden;
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
     }
 
     body {
@@ -156,10 +185,17 @@
       line-height: 1.65;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+      width: 100%;
+      max-width: 100vw;
       overflow-x: hidden;
       min-height: 100vh;
       position: relative;
       transition: background-color var(--transition-normal), color var(--transition-normal);
+    }
+
+    img, svg, video, canvas {
+      max-width: 100%;
+      height: auto;
     }
 
     /* Background Ambient Tech Glow */
@@ -1436,7 +1472,7 @@
       padding: 0.75rem 1rem;
       color: var(--text-primary);
       font-family: var(--font-sans);
-      font-size: 0.92rem;
+      font-size: 16px; /* 16px prevents iOS Safari from automatically zooming into the page */
       outline: none;
       transition: all var(--transition-fast);
     }
@@ -1581,8 +1617,11 @@
     }
 
     /* ==========================================================================
-       RESPONSIVE DESIGN (MOBILE & TABLET)
+       RESPONSIVE & DEVICE-SPECIFIC DESIGN (MOBILE, TABLET, DESKTOP)
+       Dynamic device formatting based on detected client & viewport media
        ========================================================================== */
+
+    /* Universal Tablet & Below (<= 992px) */
     @media (max-width: 992px) {
       .nav-links {
         display: none !important;
@@ -1604,26 +1643,45 @@
         flex-direction: column;
         gap: 0.5rem;
         z-index: 99;
-        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5);
+        max-height: calc(100vh - var(--header-height));
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
       }
 
       .mobile-nav.open {
         display: flex !important;
       }
 
-      .mobile-nav a {
+      .mobile-nav a,
+      .mobile-nav .btn-print-mobile {
         color: var(--text-primary);
         font-size: 1.02rem;
         font-weight: 600;
         text-decoration: none;
-        padding: 0.65rem 0.85rem;
+        padding: 0.75rem 0.85rem;
         border-radius: var(--radius-sm);
         transition: background-color var(--transition-fast), color var(--transition-fast);
       }
 
-      .mobile-nav a:hover {
+      .mobile-nav a:hover,
+      .mobile-nav .btn-print-mobile:hover {
         background: var(--bg-card);
         color: var(--accent-cyan);
+      }
+
+      .mobile-nav .btn-print-mobile {
+        background: rgba(6, 182, 212, 0.08);
+        border: 1px solid rgba(6, 182, 212, 0.25);
+        color: var(--accent-cyan);
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        margin-top: 0.5rem;
+        cursor: pointer;
+        font-family: inherit;
+        width: 100%;
+        text-align: left;
       }
 
       .timeline {
@@ -1642,6 +1700,478 @@
         justify-content: center;
       }
     }
+
+    /* Dedicated Mobile Formatting (<= 768px or [data-device="mobile"]) */
+    @media (max-width: 768px) {
+      :root {
+        --header-height: 62px;
+      }
+
+      html, body {
+        overflow-x: hidden;
+        width: 100%;
+        max-width: 100vw;
+      }
+
+      .container {
+        padding: 0 1rem;
+        width: 100%;
+        max-width: 100%;
+      }
+
+      /* Navbar - Prevent overflow and zoom out */
+      .navbar-inner {
+        padding: 0 0.85rem;
+        gap: 0.5rem;
+        height: var(--header-height);
+      }
+
+      .brand-logo {
+        gap: 0.5rem;
+      }
+
+      .brand-devops-icon {
+        height: 28px;
+        max-width: 60px;
+      }
+
+      .brand-name {
+        font-size: 1rem;
+      }
+
+      .brand-sub {
+        font-size: 0.6rem;
+        letter-spacing: 0.08em;
+      }
+
+      /* Hide Print button in top navbar on mobile to fit screen; print is inside mobileNav drawer */
+      #printBtn {
+        display: none !important;
+      }
+
+      .nav-actions {
+        gap: 0.4rem;
+      }
+
+      .nav-lang-picker {
+        padding: 0.15rem;
+        gap: 0.15rem;
+      }
+
+      .nav-lang-btn {
+        padding: 0.24rem 0.48rem;
+        font-size: 0.72rem;
+      }
+
+      .btn-icon-only {
+        width: 36px;
+        height: 36px;
+      }
+
+      .mobile-menu-btn svg {
+        width: 19px;
+        height: 19px;
+      }
+
+      /* Hero Section Mobile Formatting */
+      .hero {
+        padding: 1.75rem 0 1.5rem;
+      }
+
+      .hero-lang-bar {
+        margin-bottom: 1.25rem;
+      }
+
+      .hero-lang-tabs {
+        padding: 0.2rem;
+        gap: 0.2rem;
+      }
+
+      .hero-lang-tab {
+        padding: 0.35rem 0.85rem;
+        font-size: 0.8rem;
+      }
+
+      .hero-badge-wrap {
+        font-size: 0.76rem;
+        padding: 0.35rem 0.75rem;
+        white-space: normal;
+        line-height: 1.35;
+        margin-bottom: 1.25rem;
+        display: inline-flex;
+        max-width: 100%;
+        text-align: left;
+      }
+
+      .hero-title {
+        font-size: clamp(2rem, 8.5vw, 2.5rem);
+        line-height: 1.15;
+        margin-bottom: 0.6rem;
+      }
+
+      .hero-role {
+        font-size: 1.05rem;
+        gap: 0.35rem;
+        margin-bottom: 1rem;
+      }
+
+      .hero-bio {
+        font-size: 0.95rem;
+        line-height: 1.65;
+        margin-bottom: 1.5rem;
+      }
+
+      /* Direct Contact Pills - Stack neatly on mobile, prevent overflow */
+      .contact-pills {
+        display: flex;
+        flex-direction: column;
+        gap: 0.55rem;
+        margin-bottom: 1.75rem;
+        width: 100%;
+      }
+
+      .contact-pill {
+        width: 100%;
+        justify-content: flex-start;
+        padding: 0.55rem 0.85rem;
+        font-size: 0.84rem;
+        box-sizing: border-box;
+      }
+
+      .contact-pill span:not(.badge-lock):not(.badge-lock-text) {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .badge-lock {
+        margin-left: auto;
+        flex-shrink: 0;
+      }
+
+      /* Hero Actions - Full width buttons on mobile */
+      .hero-actions {
+        flex-direction: column;
+        width: 100%;
+        gap: 0.65rem;
+        margin-bottom: 2.25rem;
+      }
+
+      .hero-actions .btn {
+        width: 100%;
+        justify-content: center;
+        padding: 0.75rem 1rem;
+        font-size: 0.92rem;
+      }
+
+      /* Key Metrics Grid - 2 columns on mobile */
+      .metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+        margin-bottom: 2.25rem;
+      }
+
+      .metric-card {
+        padding: 1.1rem 0.95rem;
+      }
+
+      .metric-value {
+        font-size: 1.65rem;
+      }
+
+      .metric-label {
+        font-size: 0.78rem;
+        line-height: 1.35;
+      }
+
+      /* About Section & Pillars */
+      .about-lead {
+        font-size: 0.98rem;
+        line-height: 1.65;
+        margin-bottom: 1.5rem;
+      }
+
+      .pillars-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .pillar-card {
+        padding: 1.25rem;
+      }
+
+      .pillar-title {
+        font-size: 1.1rem;
+      }
+
+      .pillar-desc {
+        font-size: 0.88rem;
+      }
+
+      /* Technical Skills Matrix */
+      .skill-filters {
+        gap: 0.4rem;
+        margin-bottom: 1.25rem;
+        flex-wrap: wrap;
+      }
+
+      .filter-btn {
+        padding: 0.38rem 0.8rem;
+        font-size: 0.78rem;
+      }
+
+      .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.65rem;
+      }
+
+      .skill-item {
+        padding: 0.75rem 0.65rem;
+        gap: 0.55rem;
+      }
+
+      .skill-badge-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 1rem;
+        flex-shrink: 0;
+      }
+
+      .skill-name {
+        font-size: 0.85rem;
+      }
+
+      .skill-cat {
+        font-size: 0.68rem;
+      }
+
+      /* Experience Timeline */
+      .timeline {
+        margin-left: 0.25rem;
+        padding-left: 1.15rem;
+        gap: 1.75rem;
+        border-left-width: 2px;
+      }
+
+      .timeline-dot {
+        left: calc(-1.15rem - 6px);
+        width: 10px;
+        height: 10px;
+        top: 6px;
+      }
+
+      .experience-card {
+        padding: 1.25rem 1rem;
+        border-radius: var(--radius-md);
+      }
+
+      .exp-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.35rem;
+        margin-bottom: 0.65rem;
+      }
+
+      .exp-role {
+        font-size: 1.15rem;
+        line-height: 1.25;
+      }
+
+      .exp-company {
+        font-size: 0.95rem;
+      }
+
+      .exp-date {
+        font-size: 0.75rem;
+        padding: 0.22rem 0.6rem;
+      }
+
+      .exp-summary {
+        font-size: 0.9rem;
+        line-height: 1.55;
+        margin-bottom: 1rem;
+      }
+
+      .achievement-list {
+        gap: 0.65rem;
+        margin-bottom: 1.25rem;
+      }
+
+      .achievement-item {
+        font-size: 0.86rem;
+        gap: 0.55rem;
+        line-height: 1.5;
+      }
+
+      .tech-pills {
+        gap: 0.35rem;
+      }
+
+      .tech-pill {
+        font-size: 0.72rem;
+        padding: 0.2rem 0.5rem;
+      }
+
+      /* Featured Projects Grid */
+      .projects-grid {
+        grid-template-columns: 1fr;
+        gap: 1.15rem;
+      }
+
+      .project-card {
+        padding: 1.35rem;
+      }
+
+      .project-title {
+        font-size: 1.15rem;
+      }
+
+      .project-desc {
+        font-size: 0.88rem;
+        margin-bottom: 1.15rem;
+      }
+
+      /* Education & Certifications */
+      .edu-cert-container {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+      }
+
+      .edu-card, .cert-card {
+        padding: 1.25rem;
+      }
+
+      .edu-degree {
+        font-size: 1.05rem;
+      }
+
+      .edu-institution {
+        font-size: 0.9rem;
+      }
+
+      .cert-title {
+        font-size: 0.88rem;
+      }
+
+      /* Contact CTA Section */
+      .contact-cta {
+        padding: 2.25rem 1.15rem;
+        border-radius: var(--radius-md);
+      }
+
+      .contact-title {
+        font-size: 1.55rem;
+      }
+
+      .contact-subtitle {
+        font-size: 0.92rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .cta-actions {
+        flex-direction: column;
+        width: 100%;
+        gap: 0.65rem;
+      }
+
+      .cta-actions .btn {
+        width: 100%;
+        justify-content: center;
+        padding: 0.75rem 1rem;
+      }
+
+      /* Modal Dialog on Mobile */
+      .modal-overlay {
+        padding: 0.75rem;
+      }
+
+      .modal-card {
+        padding: 1.5rem 1.25rem 1.75rem;
+        max-width: 100%;
+        max-height: 85vh;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .modal-title {
+        font-size: 1.2rem;
+      }
+
+      .modal-desc {
+        font-size: 0.88rem;
+        margin-bottom: 1.2rem;
+      }
+
+      /* Footer */
+      .footer-inner {
+        flex-direction: column;
+        text-align: center;
+        gap: 1.25rem;
+      }
+
+      .footer-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1.1rem;
+      }
+    }
+
+    /* Extra Small Screen Adjustments (< 440px / compact smartphones) */
+    @media (max-width: 440px) {
+      .navbar-inner {
+        padding: 0 0.65rem;
+      }
+
+      .brand-sub {
+        display: none !important;
+      }
+
+      .brand-devops-icon {
+        height: 24px;
+        max-width: 50px;
+      }
+
+      .brand-name {
+        font-size: 0.92rem;
+      }
+
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .metrics-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Device Detection Indicator styling */
+    .device-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      color: var(--accent-cyan);
+      background: rgba(6, 182, 212, 0.08);
+      border: 1px solid rgba(6, 182, 212, 0.25);
+      padding: 0.25rem 0.7rem;
+      border-radius: var(--radius-full);
+      margin-top: 0.65rem;
+      transition: all var(--transition-fast);
+    }
+    /* Explicit Enforcement for data-device="mobile" */
+    html[data-device="mobile"] .nav-links { display: none !important; }
+    html[data-device="mobile"] .mobile-menu-btn { display: inline-flex !important; }
+    html[data-device="mobile"] #printBtn { display: none !important; }
+    html[data-device="mobile"] .hero-actions { flex-direction: column !important; width: 100% !important; }
+    html[data-device="mobile"] .hero-actions .btn { width: 100% !important; justify-content: center !important; }
+    html[data-device="mobile"] .contact-pills { flex-direction: column !important; width: 100% !important; }
+    html[data-device="mobile"] .contact-pill { width: 100% !important; }
+    html[data-device="mobile"] .pillars-grid { grid-template-columns: 1fr !important; }
+    html[data-device="mobile"] .projects-grid { grid-template-columns: 1fr !important; }
+    html[data-device="mobile"] .edu-cert-container { grid-template-columns: 1fr !important; }
+    html[data-device="mobile"] .cta-actions { flex-direction: column !important; width: 100% !important; }
+    html[data-device="mobile"] .cta-actions .btn { width: 100% !important; justify-content: center !important; }
 
     /* ==========================================================================
        DEDICATED ATS & PAPER PRINT STYLESHEET (@media print)
@@ -1906,6 +2436,15 @@
       <a href="#projects" class="mobile-link"><span lang="en">Projects</span><span lang="pt">Projetos</span></a>
       <a href="#education" class="mobile-link"><span lang="en">Education</span><span lang="pt">Formação</span></a>
       <a href="#contact" class="mobile-link"><span lang="en">Contact</span><span lang="pt">Contato</span></a>
+      <button class="mobile-link btn-print-mobile" id="mobilePrintBtn" type="button" title="Print / PDF Resume">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 6 2 18 2 18 9"></polyline>
+          <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+          <rect x="6" y="14" width="12" height="8"></rect>
+        </svg>
+        <span lang="en">Print CV / Save PDF</span>
+        <span lang="pt">Imprimir CV / Salvar PDF</span>
+      </button>
     </div>
   </nav>
 
@@ -3000,6 +3539,10 @@
     <div class="container footer-inner">
       <div>
         <p>&copy; <span id="year">2026</span> João Araújo. <span lang="en">Designed for high reliability & performance.</span><span lang="pt">Projetado para alta confiabilidade e performance.</span></p>
+        <div class="device-indicator" id="deviceIndicator" title="Dispositivo e formato de visualização detectados">
+          <span class="device-icon" id="deviceIndicatorIcon">💻</span>
+          <span class="device-text" id="deviceIndicatorText">Desktop View</span>
+        </div>
       </div>
       <div class="footer-links">
         <a href="https://github.com/araujoajoao" target="_blank" rel="noopener noreferrer">GitHub</a>
@@ -3015,6 +3558,84 @@
        ========================================================================= -->
   <script>
     (function () {
+      // 0. Client Device & OS Detection & Formatting Engine
+      function syncDeviceDetection() {
+        try {
+          const ua = navigator.userAgent || navigator.vendor || window.opera || '';
+          const platform = navigator.platform || '';
+          const maxTouch = navigator.maxTouchPoints || 0;
+          const isTouch = maxTouch > 0 || ('ontouchstart' in window);
+          const width = window.innerWidth || document.documentElement.clientWidth || screen.width;
+          const height = window.innerHeight || document.documentElement.clientHeight || screen.height;
+          const orientation = width > height ? 'landscape' : 'portrait';
+
+          // Detect OS
+          let os = 'other';
+          if (/iPad|iPhone|iPod/.test(ua) || (platform === 'MacIntel' && maxTouch > 1)) {
+            os = 'ios';
+          } else if (/Android/.test(ua)) {
+            os = 'android';
+          } else if (/Mac/.test(platform) || /Macintosh/.test(ua)) {
+            os = 'macos';
+          } else if (/Win/.test(platform) || /Windows/.test(ua)) {
+            os = 'windows';
+          } else if (/Linux/.test(platform) || /Linux/.test(ua)) {
+            os = 'linux';
+          }
+
+          // Detect Device Form Factor
+          const isMobileUA = /Android.*Mobile|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini|Mobile/i.test(ua);
+          const isTabletUA = /iPad|Tablet|PlayBook|Silk/i.test(ua) || (platform === 'MacIntel' && maxTouch > 1);
+
+          let device = 'desktop';
+          if (isMobileUA || width < 768) {
+            device = 'mobile';
+          } else if (isTabletUA || (width >= 768 && width <= 1024 && isTouch) || width <= 992) {
+            device = 'tablet';
+          } else {
+            device = 'desktop';
+          }
+
+          const root = document.documentElement;
+          root.setAttribute('data-device', device);
+          root.setAttribute('data-os', os);
+          root.setAttribute('data-touch', isTouch ? 'true' : 'false');
+          root.setAttribute('data-orientation', orientation);
+
+          root.classList.remove('device-mobile', 'device-tablet', 'device-desktop');
+          root.classList.add('device-' + device);
+          if (isTouch) root.classList.add('is-touch');
+          else root.classList.remove('is-touch');
+
+          // Update footer device indicator badge
+          const indicatorText = document.getElementById('deviceIndicatorText');
+          const indicatorIcon = document.getElementById('deviceIndicatorIcon');
+          if (indicatorText) {
+            const osName = os === 'ios' ? 'iOS' : os === 'android' ? 'Android' : os === 'macos' ? 'macOS' : os === 'windows' ? 'Windows' : os === 'linux' ? 'Linux' : '';
+            if (device === 'mobile') {
+              indicatorText.textContent = `Mobile View (${osName ? osName + ' · ' : ''}${width}px)`;
+              if (indicatorIcon) indicatorIcon.textContent = '📱';
+            } else if (device === 'tablet') {
+              indicatorText.textContent = `Tablet View (${osName ? osName + ' · ' : ''}${width}px)`;
+              if (indicatorIcon) indicatorIcon.textContent = '📱';
+            } else {
+              indicatorText.textContent = `Desktop View (${osName ? osName + ' · ' : ''}${width}px)`;
+              if (indicatorIcon) indicatorIcon.textContent = '💻';
+            }
+          }
+        } catch (e) {
+          console.warn('Device detection error:', e);
+        }
+      }
+
+      syncDeviceDetection();
+      let resizeDebounceTimer;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeDebounceTimer);
+        resizeDebounceTimer = setTimeout(syncDeviceDetection, 80);
+      });
+      window.addEventListener('orientationchange', syncDeviceDetection);
+
       // 1. Dynamic Year
       document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -3047,9 +3668,20 @@
 
       // 3. Print / PDF Button
       const printBtn = document.getElementById('printBtn');
-      printBtn.addEventListener('click', () => {
-        window.print();
-      });
+      if (printBtn) {
+        printBtn.addEventListener('click', () => {
+          window.print();
+        });
+      }
+
+      const mobilePrintBtn = document.getElementById('mobilePrintBtn');
+      if (mobilePrintBtn) {
+        mobilePrintBtn.addEventListener('click', () => {
+          const mobileNav = document.getElementById('mobileNav');
+          if (mobileNav) mobileNav.classList.remove('open');
+          window.print();
+        });
+      }
 
       // 4. Toast Notification & Copy Email
       const toast = document.getElementById('toast');

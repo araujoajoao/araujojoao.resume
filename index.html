@@ -3043,8 +3043,141 @@
       const verifierEmail = document.getElementById('verifierEmail');
       const humanCheck = document.getElementById('humanCheck');
       const humanCheckWrap = document.getElementById('humanCheckWrap');
+      const confirmRevealBtn = document.getElementById('confirmRevealBtn');
       const confirmRevealBtnText = document.getElementById('confirmRevealBtnText');
       const modalDesc = document.getElementById('modalDesc');
+
+      // Blocked disposable and temporary email domains
+      const DISPOSABLE_DOMAINS = new Set([
+        'mailinator.com', 'tempmail.com', '10minutemail.com', 'guerrillamail.com',
+        'throwawaymail.com', 'trashmail.com', 'yopmail.com', 'sharklasers.com',
+        'dispostable.com', 'getairmail.com', 'crazymailing.com', 'fakeinbox.com',
+        'temp-mail.org', 'generator.email', 'fakemailgenerator.com', 'inboxkitten.com',
+        'nada.ltd', 'mohmal.com', 'tempinbox.com', 'burnermail.io', 'dropmail.me',
+        'tempail.com', 'emailondeck.com', 'mytemp.email', 'spambox.us', 'mytempemail.com',
+        'trashmail.net', 'mytempemail.net', 'disposablemail.com', 'fakemail.net',
+        'jetable.org', 'getnada.com', 'maildrop.cc', 'harakirimail.com', 'tempmailaddress.com'
+      ]);
+
+      // Blocked placeholder / dummy usernames
+      const DUMMY_USERNAMES = new Set([
+        'test', 'teste', 'testing', 'fake', 'asdf', 'asdfgh', 'qwer', 'qwerty',
+        'admin', 'user', 'usuario', 'none', 'null', 'noone', 'nobody', 'aaa',
+        '123', '1234', '12345', 'sample', 'exemplo', 'naoresponda', 'noreply',
+        'abc', 'abcd', 'xyz', 'foo', 'bar', 'foobar', 'temp'
+      ]);
+
+      // Blocked dummy / fictitious domains
+      const DUMMY_DOMAINS = new Set([
+        'test.com', 'teste.com', 'testing.com', 'fake.com', 'asdf.com', 'qwerty.com',
+        'example.com', 'example.org', 'example.net', 'sample.com', 'fakemail.com',
+        'domain.com', 'email.com', 'myemail.com', 'nomail.com', 'void.com', 'temp.com'
+      ]);
+
+      // Common domain typos
+      const TYPO_DOMAINS = {
+        'gmial.com': 'gmail.com',
+        'gamil.com': 'gmail.com',
+        'gmai.com': 'gmail.com',
+        'hotmial.com': 'hotmail.com',
+        'outlok.com': 'outlook.com',
+        'yaho.com': 'yahoo.com'
+      };
+
+      async function validateEmailAuthenticity(email) {
+        const cleanEmail = (email || '').trim().toLowerCase();
+        const basicRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+        if (!basicRegex.test(cleanEmail)) {
+          return {
+            valid: false,
+            messagePt: 'Por favor, informe um formato de e-mail válido (ex: nome@empresa.com).',
+            messageEn: 'Please provide a valid email format (e.g. name@company.com).'
+          };
+        }
+
+        const parts = cleanEmail.split('@');
+        const username = parts[0];
+        const domain = parts[1];
+
+        if (DUMMY_USERNAMES.has(username) || /^([a-z0-9])\1{2,}$/.test(username)) {
+          return {
+            valid: false,
+            messagePt: 'Por favor, informe um endereço de e-mail real e legítimo.',
+            messageEn: 'Please provide a real and legitimate email address.'
+          };
+        }
+
+        if (DUMMY_DOMAINS.has(domain)) {
+          return {
+            valid: false,
+            messagePt: 'Por favor, informe um domínio de e-mail corporativo ou pessoal autêntico.',
+            messageEn: 'Please provide an authentic corporate or personal email domain.'
+          };
+        }
+
+        if (DISPOSABLE_DOMAINS.has(domain)) {
+          return {
+            valid: false,
+            messagePt: 'E-mails temporários ou descartáveis não são permitidos.',
+            messageEn: 'Temporary or disposable email services are not permitted.'
+          };
+        }
+
+        if (TYPO_DOMAINS[domain]) {
+          return {
+            valid: false,
+            messagePt: 'Possível erro de digitação no domínio: você quis dizer @' + TYPO_DOMAINS[domain] + '?',
+            messageEn: 'Possible domain typo: did you mean @' + TYPO_DOMAINS[domain] + '?'
+          };
+        }
+
+        // Live DNS MX Lookup via Google Public DNS (DoH) with Cloudflare fallback
+        try {
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 3500);
+
+          let res = null;
+          try {
+            res = await fetch('https://dns.google/resolve?name=' + encodeURIComponent(domain) + '&type=MX', {
+              signal: controller.signal
+            });
+          } catch (err) {
+            res = await fetch('https://cloudflare-dns.com/dns-query?name=' + encodeURIComponent(domain) + '&type=MX', {
+              headers: { 'Accept': 'application/dns-json' },
+              signal: controller.signal
+            });
+          } finally {
+            clearTimeout(timeoutId);
+          }
+
+          if (res && res.ok) {
+            const data = await res.json();
+            // Status 3 is NXDOMAIN (domain does not exist in internet DNS)
+            if (data.Status === 3) {
+              return {
+                valid: false,
+                messagePt: 'O domínio @' + domain + ' não existe ou é inválido.',
+                messageEn: 'The domain @' + domain + ' does not exist or is invalid.'
+              };
+            }
+
+            // Check if there are MX records (type 15)
+            const answers = data.Answer || [];
+            const hasMx = answers.some(ans => ans.type === 15);
+            if (!hasMx && answers.length === 0) {
+              return {
+                valid: false,
+                messagePt: 'O domínio @' + domain + ' não possui servidores de e-mail ativos (MX).',
+                messageEn: 'The domain @' + domain + ' has no active mail exchange servers (MX).'
+              };
+            }
+          }
+        } catch (netErr) {
+          console.warn('DNS lookup fallback:', netErr.message);
+        }
+
+        return { valid: true };
+      }
 
       // State: ALWAYS starts locked on page load / reload (no session bypass)
       let isRevealed = false;
@@ -3351,7 +3484,7 @@
       }
 
       if (verifyForm) {
-        verifyForm.addEventListener('submit', (e) => {
+        verifyForm.addEventListener('submit', async (e) => {
           e.preventDefault();
 
           const visitor = (verifierName && verifierName.value.trim()) || '';
@@ -3365,9 +3498,8 @@
           }
 
           const emailVal = (verifierEmail && verifierEmail.value.trim().toLowerCase()) || '';
-          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-          if (!emailVal || !emailRegex.test(emailVal)) {
-            showToast(currentLang === 'pt' ? '⚠️ Por favor, informe um e-mail válido (ex: seu.nome@empresa.com).' : '⚠️ Please provide a valid email address (e.g. your.name@company.com).');
+          if (!emailVal) {
+            showToast(currentLang === 'pt' ? '⚠️ Por favor, informe seu e-mail profissional.' : '⚠️ Please provide your professional email.');
             if (verifierEmail) {
               verifierEmail.focus();
               verifierEmail.classList.add('input-error');
@@ -3381,6 +3513,31 @@
             return;
           }
 
+          // UI feedback during validation
+          const originalBtnHTML = confirmRevealBtnText ? confirmRevealBtnText.innerHTML : '';
+          if (confirmRevealBtn) confirmRevealBtn.disabled = true;
+          if (confirmRevealBtnText) {
+            confirmRevealBtnText.innerHTML = currentLang === 'pt'
+              ? '<span>⏳ Validando e-mail...</span>'
+              : '<span>⏳ Verifying email...</span>';
+          }
+
+          const check = await validateEmailAuthenticity(emailVal);
+          if (!check.valid) {
+            if (confirmRevealBtn) confirmRevealBtn.disabled = false;
+            if (confirmRevealBtnText) confirmRevealBtnText.innerHTML = originalBtnHTML;
+            if (verifierEmail) {
+              verifierEmail.focus();
+              verifierEmail.classList.add('input-error');
+            }
+            showToast('⚠️ ' + (currentLang === 'pt' ? check.messagePt : check.messageEn));
+            return;
+          }
+
+          // Restore button before closing
+          if (confirmRevealBtn) confirmRevealBtn.disabled = false;
+          if (confirmRevealBtnText) confirmRevealBtnText.innerHTML = originalBtnHTML;
+
           const action = pendingAction || 'whatsapp';
           closeSecurityModal();
 
@@ -3389,8 +3546,8 @@
 
           if (action === 'whatsapp') {
             const msg = currentLang === 'pt'
-              ? '✅ Acesso liberado! Olá, ' + visitor + ' (' + emailVal + '). Abrindo WhatsApp...'
-              : '✅ Access granted! Welcome, ' + visitor + ' (' + emailVal + '). Opening WhatsApp...';
+              ? '✅ E-mail verificado! Olá, ' + visitor + ' (' + emailVal + '). Abrindo WhatsApp...'
+              : '✅ Email verified! Welcome, ' + visitor + ' (' + emailVal + '). Opening WhatsApp...';
             showToast(msg);
             const trigger = document.createElement('a');
             trigger.href = WHATSAPP_URL;
@@ -3402,8 +3559,8 @@
           } else if (action === 'email') {
             navigator.clipboard.writeText(FULL_EMAIL).catch(() => {});
             const msg = currentLang === 'pt'
-              ? '✅ Acesso liberado! Olá, ' + visitor + '. Abrindo e-mail (' + FULL_EMAIL + ')...'
-              : '✅ Access granted! Welcome, ' + visitor + '. Opening email (' + FULL_EMAIL + ')...';
+              ? '✅ E-mail verificado! Olá, ' + visitor + '. Abrindo e-mail (' + FULL_EMAIL + ')...'
+              : '✅ Email verified! Welcome, ' + visitor + '. Opening email (' + FULL_EMAIL + ')...';
             showToast(msg);
             const trigger = document.createElement('a');
             trigger.href = MAILTO_URL;
@@ -3412,15 +3569,15 @@
             trigger.remove();
           } else if (action === 'copy_email') {
             navigator.clipboard.writeText(FULL_EMAIL).then(() => {
-              const copyMsg = currentLang === 'pt' ? '✅ Acesso liberado para ' + emailVal + '! E-mail copiado: ' + FULL_EMAIL : '✅ Access granted for ' + emailVal + '! Email copied: ' + FULL_EMAIL;
+              const copyMsg = currentLang === 'pt' ? '✅ E-mail verificado! E-mail copiado: ' + FULL_EMAIL : '✅ Email verified! Email copied: ' + FULL_EMAIL;
               showToast(copyMsg);
             }).catch(() => {
               showToast('Email: ' + FULL_EMAIL);
             });
           } else if (action === 'phone') {
             const msg = currentLang === 'pt'
-              ? '✅ Acesso liberado para ' + emailVal + '! Telefone liberado: ' + FULL_PHONE
-              : '✅ Access granted for ' + emailVal + '! Phone unlocked: ' + FULL_PHONE;
+              ? '✅ E-mail verificado! Telefone liberado: ' + FULL_PHONE
+              : '✅ Email verified! Phone unlocked: ' + FULL_PHONE;
             showToast(msg);
           }
         });

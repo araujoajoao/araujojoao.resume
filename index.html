@@ -1947,7 +1947,7 @@
 
       <!-- Hero Actions -->
       <div class="hero-actions">
-        <a href="https://wa.me/5554996277371" target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="heroWhatsAppBtn">
+        <a href="javascript:void(0)" class="btn btn-primary" id="heroWhatsAppBtn" role="button" aria-haspopup="dialog" title="Conversar no WhatsApp">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
           </svg>
@@ -2787,7 +2787,7 @@
           Estou aberto a oportunidades como Engenheiro de DevOps, Engenheiro de Observabilidade e Arquiteto Cloud. Seja para posições em tempo integral, consultoria ou projetos de migração para nuvem, fique à vontade para entrar em contato.
         </p>
         <div class="cta-actions">
-          <a href="https://wa.me/5554996277371" target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="ctaWhatsAppBtn">
+          <a href="javascript:void(0)" class="btn btn-primary" id="ctaWhatsAppBtn" role="button" aria-haspopup="dialog" title="Conversar no WhatsApp">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
             </svg>
@@ -2815,30 +2815,40 @@
     </section>
   </main>
 
-  <!-- Identity Confirmation Modal -->
+  <!-- Identity & Security Confirmation Modal -->
   <div class="modal-overlay" id="verifyModal" aria-hidden="true" role="dialog" aria-labelledby="modalTitle">
     <div class="modal-card">
-      <button class="modal-close-btn" id="modalCloseBtn" aria-label="Fechar">&times;</button>
+      <button class="modal-close-btn" id="modalCloseBtn" aria-label="Fechar / Close">&times;</button>
       <div class="modal-icon-wrap">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
           <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
         </svg>
       </div>
-      <h3 class="modal-title" id="modalTitle">Confirmação de Identidade</h3>
-      <p class="modal-desc">
-        Para proteção contra bots e scrapers automáticos, confirme sua intenção de contato para visualizar o e-mail completo e WhatsApp de João Araújo.
+      <h3 class="modal-title" id="modalTitle">
+        <span lang="en">Security Verification</span>
+        <span lang="pt">Passo de Segurança</span>
+      </h3>
+      <p class="modal-desc" id="modalDesc">
+        <span lang="en">To protect against automated crawlers and bots, please verify your intent before contacting João Araújo on WhatsApp.</span>
+        <span lang="pt">Para proteção contra bots e scrapers automáticos, confirme sua intenção de contato antes de abrir o WhatsApp de João Araújo.</span>
       </p>
 
       <form id="verifyForm" class="modal-form" onsubmit="return false;">
         <div class="form-group">
-          <label for="verifierName" class="form-label">Seu Nome ou Empresa <span class="optional">(opcional)</span></label>
-          <input type="text" id="verifierName" class="form-input" placeholder="Ex: Maria (Tech Recruiter) ou Google" autocomplete="off">
+          <label for="verifierName" class="form-label">
+            <span lang="en">Your Name or Company <span class="optional">(optional)</span></span>
+            <span lang="pt">Seu Nome ou Empresa <span class="optional">(opcional)</span></span>
+          </label>
+          <input type="text" id="verifierName" class="form-input" placeholder="Ex: Recruiter / Empresa" autocomplete="off">
         </div>
 
         <div class="human-check-box" id="humanCheckWrap">
           <input type="checkbox" id="humanCheck" required>
-          <label for="humanCheck" class="human-check-label">Confirmo que sou um recrutador ou visitante humano</label>
+          <label for="humanCheck" class="human-check-label">
+            <span lang="en">I confirm I am a recruiter or human visitor</span>
+            <span lang="pt">Confirmo que sou um recrutador ou visitante humano</span>
+          </label>
         </div>
 
         <button type="submit" class="btn btn-primary btn-block" id="confirmRevealBtn">
@@ -2846,7 +2856,10 @@
             <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
             <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
           </svg>
-          <span>Confirmar & Revelar Contatos</span>
+          <span id="confirmRevealBtnText">
+            <span lang="en">Verify & Continue to WhatsApp</span>
+            <span lang="pt">Confirmar & Abrir WhatsApp</span>
+          </span>
         </button>
       </form>
     </div>
@@ -2869,7 +2882,7 @@
       <div class="footer-links">
         <a href="https://github.com/araujoajoao" target="_blank" rel="noopener noreferrer">GitHub</a>
         <a href="https://www.linkedin.com/in/araujojoao84/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-        <a href="https://wa.me/5554996277371" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+        <a href="javascript:void(0)" id="footerWhatsAppBtn" role="button" title="Conversar no WhatsApp">WhatsApp</a>
         <a href="#navbar"><span lang="en">Back to Top ↑</span><span lang="pt">Voltar ao Topo ↑</span></a>
       </div>
     </div>
@@ -2991,7 +3004,7 @@
         });
       });
 
-      // 8. Contact Unmasking & Inactivity Auto-Lock (1 minute)
+      // 8. Contact Unmasking, Security Verification & Inactivity Auto-Lock (1 minute)
       const FULL_EMAIL = 'araujoaojoao@gmail.com';
       const MASKED_EMAIL = 'araujo•••••@gmail.com';
       const FULL_PHONE = '+55 54 99627-7371';
@@ -3009,13 +3022,63 @@
       const phoneLockBadge = document.getElementById('phoneLockBadge');
 
       const copyEmailBtn = document.getElementById('copyEmailBtn');
+      const heroWhatsAppBtn = document.getElementById('heroWhatsAppBtn');
+      const ctaWhatsAppBtn = document.getElementById('ctaWhatsAppBtn');
+      const footerWhatsAppBtn = document.getElementById('footerWhatsAppBtn');
+
+      // Security Verification Modal elements
+      const verifyModal = document.getElementById('verifyModal');
+      const modalCloseBtn = document.getElementById('modalCloseBtn');
+      const verifyForm = document.getElementById('verifyForm');
+      const verifierName = document.getElementById('verifierName');
+      const humanCheck = document.getElementById('humanCheck');
+      const humanCheckWrap = document.getElementById('humanCheckWrap');
+      const confirmRevealBtnText = document.getElementById('confirmRevealBtnText');
 
       let isRevealed = false;
       let lockTimer = null;
       let lastActivityTime = Date.now();
+      let pendingAction = null; // 'whatsapp' | 'phone' | 'email'
 
-      const LOCK_BADGE_HTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg> <span class="badge-lock-text">Revelar</span>';
-      const REVEALED_BADGE_HTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> <span class="badge-lock-text">Revelado</span>';
+      function getLockBadgeHTML() {
+        const text = currentLang === 'pt' ? 'Revelar' : 'Reveal';
+        return '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg> <span class="badge-lock-text">' + text + '</span>';
+      }
+
+      function getRevealedBadgeHTML() {
+        const text = currentLang === 'pt' ? 'Revelado' : 'Revealed';
+        return '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> <span class="badge-lock-text">' + text + '</span>';
+      }
+
+      function openSecurityModal(action = 'whatsapp') {
+        pendingAction = action;
+        if (!verifyModal) return;
+        verifyModal.classList.add('open');
+        verifyModal.setAttribute('aria-hidden', 'false');
+        if (humanCheck) humanCheck.checked = false;
+        if (verifierName) verifierName.value = '';
+
+        if (confirmRevealBtnText) {
+          if (action === 'whatsapp') {
+            confirmRevealBtnText.innerHTML = '<span lang="en">Verify & Open WhatsApp</span><span lang="pt">Confirmar & Abrir WhatsApp</span>';
+          } else if (action === 'phone') {
+            confirmRevealBtnText.innerHTML = '<span lang="en">Verify & Reveal WhatsApp</span><span lang="pt">Confirmar & Revelar WhatsApp</span>';
+          } else {
+            confirmRevealBtnText.innerHTML = '<span lang="en">Verify & Reveal Contacts</span><span lang="pt">Confirmar & Revelar Contatos</span>';
+          }
+        }
+
+        setTimeout(() => {
+          if (verifierName) verifierName.focus();
+        }, 120);
+      }
+
+      function closeSecurityModal() {
+        if (!verifyModal) return;
+        verifyModal.classList.remove('open');
+        verifyModal.setAttribute('aria-hidden', 'true');
+        pendingAction = null;
+      }
 
       function lockContacts(showNotice = false) {
         if (!isRevealed) return;
@@ -3028,13 +3091,13 @@
 
         if (emailPillText) emailPillText.textContent = MASKED_EMAIL;
         if (emailLockBadge) {
-          emailLockBadge.innerHTML = LOCK_BADGE_HTML;
+          emailLockBadge.innerHTML = getLockBadgeHTML();
           emailLockBadge.classList.remove('revealed');
         }
 
         if (phonePillText) phonePillText.textContent = MASKED_PHONE;
         if (phoneLockBadge) {
-          phoneLockBadge.innerHTML = LOCK_BADGE_HTML;
+          phoneLockBadge.innerHTML = getLockBadgeHTML();
           phoneLockBadge.classList.remove('revealed');
         }
 
@@ -3064,13 +3127,13 @@
 
         if (emailPillText) emailPillText.textContent = FULL_EMAIL;
         if (emailLockBadge) {
-          emailLockBadge.innerHTML = REVEALED_BADGE_HTML;
+          emailLockBadge.innerHTML = getRevealedBadgeHTML();
           emailLockBadge.classList.add('revealed');
         }
 
         if (phonePillText) phonePillText.textContent = FULL_PHONE;
         if (phoneLockBadge) {
-          phoneLockBadge.innerHTML = REVEALED_BADGE_HTML;
+          phoneLockBadge.innerHTML = getRevealedBadgeHTML();
           phoneLockBadge.classList.add('revealed');
         }
 
@@ -3095,7 +3158,7 @@
       function onUserActivity() {
         if (!isRevealed) return;
         const now = Date.now();
-        if (now - activityThrottle < 1000) return; // at most once per second
+        if (now - activityThrottle < 1000) return;
         activityThrottle = now;
         resetInactivityTimer();
       }
@@ -3114,6 +3177,21 @@
             scheduleLockTimer(INACTIVITY_TIMEOUT_MS - elapsed);
           }
         }
+      });
+
+      // Secure WhatsApp Action Handler: Requires security step if not verified
+      function handleWhatsAppRequest(e) {
+        if (e) e.preventDefault();
+        if (isRevealed) {
+          resetInactivityTimer();
+          window.open(WHATSAPP_URL, '_blank');
+        } else {
+          openSecurityModal('whatsapp');
+        }
+      }
+
+      [heroWhatsAppBtn, ctaWhatsAppBtn, footerWhatsAppBtn].forEach(btn => {
+        if (btn) btn.addEventListener('click', handleWhatsAppRequest);
       });
 
       if (emailPill) {
@@ -3141,8 +3219,7 @@
       if (phonePill) {
         phonePill.addEventListener('click', () => {
           if (!isRevealed) {
-            applyRevealedState(true);
-            showToast(currentLang === 'pt' ? '✅ WhatsApp revelado: ' + FULL_PHONE : '✅ WhatsApp revealed: ' + FULL_PHONE);
+            openSecurityModal('phone');
           } else {
             resetInactivityTimer();
             window.open(WHATSAPP_URL, '_blank');
@@ -3167,6 +3244,62 @@
           });
         });
       }
+
+      // Security Modal Event Listeners
+      if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeSecurityModal);
+      if (verifyModal) {
+        verifyModal.addEventListener('click', (e) => {
+          if (e.target === verifyModal) closeSecurityModal();
+        });
+      }
+
+      if (humanCheckWrap && humanCheck) {
+        humanCheckWrap.addEventListener('click', (e) => {
+          if (e.target !== humanCheck) {
+            humanCheck.checked = !humanCheck.checked;
+          }
+        });
+      }
+
+      if (verifyForm) {
+        verifyForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          if (!humanCheck || !humanCheck.checked) {
+            showToast(currentLang === 'pt' ? '⚠️ Por favor, confirme a verificação humana.' : '⚠️ Please check the box confirming you are human.');
+            if (humanCheck) humanCheck.focus();
+            return;
+          }
+
+          const visitor = (verifierName && verifierName.value.trim()) || '';
+          const action = pendingAction || 'whatsapp';
+          closeSecurityModal();
+
+          // Unlock / Reveal contacts across the site and start 1m auto-lock timer
+          applyRevealedState(true);
+
+          if (action === 'whatsapp') {
+            const msg = currentLang === 'pt'
+              ? (visitor ? '✅ Olá ' + visitor + '! Abrindo WhatsApp...' : '✅ Identidade confirmada! Abrindo WhatsApp...')
+              : (visitor ? '✅ Hello ' + visitor + '! Opening WhatsApp...' : '✅ Identity verified! Opening WhatsApp...');
+            showToast(msg);
+            setTimeout(() => {
+              window.open(WHATSAPP_URL, '_blank');
+            }, 350);
+          } else if (action === 'phone') {
+            showToast(currentLang === 'pt' ? '✅ WhatsApp revelado: ' + FULL_PHONE : '✅ WhatsApp revealed: ' + FULL_PHONE);
+          } else if (action === 'email') {
+            navigator.clipboard.writeText(FULL_EMAIL).then(() => {
+              showToast(currentLang === 'pt' ? '✅ E-mail revelado e copiado: ' + FULL_EMAIL : '✅ Email revealed and copied: ' + FULL_EMAIL);
+            });
+          }
+        });
+      }
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && verifyModal && verifyModal.classList.contains('open')) {
+          closeSecurityModal();
+        }
+      });
 
       // 9. Language Tab Switching (EN / PT-BR)
       let currentLang = 'en';

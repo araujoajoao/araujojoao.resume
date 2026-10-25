@@ -269,7 +269,142 @@
       text-transform: uppercase;
     }
 
-    /* Mobile drawer hidden by default on all desktop viewports */
+        /* Language Visibility Switching */
+    html[lang="en"] [lang="pt"],
+    body[data-lang="en"] [lang="pt"] {
+      display: none !important;
+    }
+
+    html[lang="pt-BR"] [lang="en"],
+    html[lang="pt"] [lang="en"],
+    body[data-lang="pt"] [lang="en"] {
+      display: none !important;
+    }
+
+    /* Language Switchers & Hero Tabs */
+    .hero-lang-bar {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1.75rem;
+    }
+
+    .hero-lang-tabs {
+      display: inline-flex;
+      align-items: center;
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-full);
+      padding: 0.3rem;
+      gap: 0.35rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 24px rgba(6, 182, 212, 0.12);
+    }
+
+    .hero-lang-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.45rem 1.15rem;
+      border-radius: var(--radius-full);
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      font-family: inherit;
+    }
+
+    .hero-lang-tab:hover {
+      color: var(--text-primary);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .hero-lang-tab.active {
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.3), rgba(99, 102, 241, 0.3));
+      color: #ffffff;
+      border-color: rgba(6, 182, 212, 0.6);
+      box-shadow: 0 2px 12px rgba(6, 182, 212, 0.35);
+      font-weight: 700;
+    }
+
+    .nav-lang-picker {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-full);
+      padding: 0.2rem;
+      gap: 0.2rem;
+    }
+
+    .nav-lang-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.28rem 0.65rem;
+      border-radius: var(--radius-full);
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      font-family: inherit;
+    }
+
+    .nav-lang-btn:hover {
+      color: var(--text-primary);
+    }
+
+    .nav-lang-btn.active {
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.3), rgba(99, 102, 241, 0.3));
+      color: #ffffff;
+      border-color: rgba(6, 182, 212, 0.5);
+    }
+
+    .mobile-lang-picker {
+      display: flex;
+      gap: 0.5rem;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 0.5rem;
+    }
+
+    .mobile-lang-btn {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      padding: 0.5rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-surface-elevated);
+      color: var(--text-secondary);
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .mobile-lang-btn.active {
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.25), rgba(99, 102, 241, 0.25));
+      border-color: var(--accent-cyan);
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    @media print {
+      .hero-lang-bar,
+      .nav-lang-picker,
+      .mobile-lang-picker {
+        display: none !important;
+      }
+    }
+
+/* Mobile drawer hidden by default on all desktop viewports */
     .mobile-nav {
       display: none;
     }
@@ -1637,16 +1772,22 @@
 
       <!-- Desktop Links -->
       <ul class="nav-links">
-        <li><a href="#about" class="nav-link">About</a></li>
-        <li><a href="#skills" class="nav-link">Skills</a></li>
-        <li><a href="#experience" class="nav-link">Experience</a></li>
-        <li><a href="#projects" class="nav-link">Projects</a></li>
-        <li><a href="#education" class="nav-link">Education</a></li>
-        <li><a href="#contact" class="nav-link">Contact</a></li>
+        <li><a href="#about" class="nav-link"><span lang="en">About</span><span lang="pt">Sobre</span></a></li>
+        <li><a href="#skills" class="nav-link"><span lang="en">Skills</span><span lang="pt">Habilidades</span></a></li>
+        <li><a href="#experience" class="nav-link"><span lang="en">Experience</span><span lang="pt">Experiência</span></a></li>
+        <li><a href="#projects" class="nav-link"><span lang="en">Projects</span><span lang="pt">Projetos</span></a></li>
+        <li><a href="#education" class="nav-link"><span lang="en">Education</span><span lang="pt">Formação</span></a></li>
+        <li><a href="#contact" class="nav-link"><span lang="en">Contact</span><span lang="pt">Contato</span></a></li>
       </ul>
 
       <!-- Action items -->
       <div class="nav-actions">
+        <!-- Language Switcher in Navbar -->
+        <div class="nav-lang-picker" role="tablist" aria-label="Language / Idioma">
+          <button class="nav-lang-btn active" id="navLangEn" data-lang="en" title="Switch to English">🇺🇸 EN</button>
+          <button class="nav-lang-btn" id="navLangPt" data-lang="pt" title="Mudar para Português">🇧🇷 PT</button>
+        </div>
+
         <!-- Print / PDF Button -->
         <button class="btn btn-outline" id="printBtn" title="Print or save as PDF Resume">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1654,7 +1795,8 @@
             <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
             <rect x="6" y="14" width="12" height="8"></rect>
           </svg>
-          <span>Print CV</span>
+          <span lang="en">Print CV</span>
+          <span lang="pt">Imprimir CV</span>
         </button>
 
         <!-- Theme Toggle -->
@@ -1688,12 +1830,16 @@
 
     <!-- Mobile Drawer Navigation -->
     <div class="mobile-nav" id="mobileNav">
-      <a href="#about" class="mobile-link">About</a>
-      <a href="#skills" class="mobile-link">Skills</a>
-      <a href="#experience" class="mobile-link">Experience</a>
-      <a href="#projects" class="mobile-link">Projects</a>
-      <a href="#education" class="mobile-link">Education</a>
-      <a href="#contact" class="mobile-link">Contact</a>
+      <div class="mobile-lang-picker" role="tablist" aria-label="Idioma">
+        <button class="mobile-lang-btn active" data-lang="en">🇺🇸 English</button>
+        <button class="mobile-lang-btn" data-lang="pt">🇧🇷 Português</button>
+      </div>
+      <a href="#about" class="mobile-link"><span lang="en">About</span><span lang="pt">Sobre</span></a>
+      <a href="#skills" class="mobile-link"><span lang="en">Skills</span><span lang="pt">Habilidades</span></a>
+      <a href="#experience" class="mobile-link"><span lang="en">Experience</span><span lang="pt">Experiência</span></a>
+      <a href="#projects" class="mobile-link"><span lang="en">Projects</span><span lang="pt">Projetos</span></a>
+      <a href="#education" class="mobile-link"><span lang="en">Education</span><span lang="pt">Formação</span></a>
+      <a href="#contact" class="mobile-link"><span lang="en">Contact</span><span lang="pt">Contato</span></a>
     </div>
   </nav>
 
@@ -1702,9 +1848,24 @@
          HERO SECTION
          ======================================================================= -->
     <section class="hero" id="hero">
+      <!-- Resume Version Tabs (Aba de Idioma) -->
+      <div class="hero-lang-bar">
+        <div class="hero-lang-tabs" role="tablist" aria-label="Versão do Currículo / Resume Version">
+          <button class="hero-lang-tab active" id="tabLangEn" role="tab" aria-selected="true" data-lang="en">
+            <span class="tab-flag">🇺🇸</span>
+            <span>English Version</span>
+          </button>
+          <button class="hero-lang-tab" id="tabLangPt" role="tab" aria-selected="false" data-lang="pt">
+            <span class="tab-flag">🇧🇷</span>
+            <span>Versão em Português</span>
+          </button>
+        </div>
+      </div>
+
       <div class="hero-badge-wrap">
         <span class="status-dot"></span>
-        <span>Open to Opportunities · Available for DevOps & Observability Roles</span>
+        <span lang="en">Open to Opportunities · Available for DevOps & Observability Roles</span>
+        <span lang="pt">Aberto a Oportunidades · Disponível para DevOps & Observabilidade</span>
       </div>
 
       <h1 class="hero-title">
@@ -1712,15 +1873,20 @@
       </h1>
 
       <div class="hero-role">
-        <span class="gradient-text">DevOps & Observability Engineer</span>
+        <span class="gradient-text" lang="en">DevOps & Observability Engineer</span>
+        <span class="gradient-text" lang="pt">Engenheiro de DevOps & Observabilidade</span>
         <span class="bullet">/</span>
-        <span>Cloud Architect</span>
+        <span lang="en">Cloud Architect</span>
+        <span lang="pt">Arquiteto Cloud</span>
         <span class="bullet">/</span>
         <span>SRE</span>
       </div>
 
-      <p class="hero-bio">
+      <p class="hero-bio" lang="en">
         Engineer with 4+ years architecting and automating high-availability cloud infrastructure (GCP, AWS, OCI), Kubernetes microservices, distributed Big Data platforms (Cloudera, Spark, Airflow), and full-stack observability with Datadog and Prometheus. Passionate about GitOps, IaC reliability, and 99.9% uptime architectures.
+      </p>
+      <p class="hero-bio" lang="pt">
+        Engenheiro com 4+ anos projetando e automatizando infraestrutura em nuvem de alta disponibilidade (GCP, AWS, OCI), microsserviços em Kubernetes, plataformas distribuídas de Big Data (Cloudera, Spark, Airflow) e observabilidade completa com Datadog e Prometheus. Foco em GitOps, confiabilidade via IaC e arquiteturas com 99,9% de disponibilidade.
       </p>
 
       <!-- Direct Contact Pills -->
@@ -1775,7 +1941,7 @@
             <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
             <circle cx="12" cy="10" r="3"></circle>
           </svg>
-          <span>Rio Grande do Sul, Brazil · Remote</span>
+          <span lang="en">Rio Grande do Sul, Brazil · Remote</span><span lang="pt">Rio Grande do Sul, Brasil · Remoto</span>
         </div>
       </div>
 
@@ -1785,7 +1951,8 @@
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
           </svg>
-          <span>Get in Touch</span>
+          <span lang="en">Get in Touch</span>
+          <span lang="pt">Entrar em Contato</span>
         </a>
 
         <button class="btn btn-outline" id="copyEmailBtn" data-email="araujoaojoao@gmail.com">
@@ -1793,7 +1960,8 @@
             <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
             <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
           </svg>
-          <span>Copy Email</span>
+          <span lang="en">Copy Email</span>
+          <span lang="pt">Copiar E-mail</span>
         </button>
 
         <a href="#projects" class="btn btn-outline">
@@ -1802,7 +1970,8 @@
             <polyline points="2 17 12 22 22 17"></polyline>
             <polyline points="2 12 12 17 22 12"></polyline>
           </svg>
-          <span>View Projects</span>
+          <span lang="en">View Projects</span>
+          <span lang="pt">Ver Projetos</span>
         </a>
       </div>
 
@@ -1810,19 +1979,19 @@
       <div class="metrics-grid">
         <div class="metric-card">
           <span class="metric-value">4+ Yrs</span>
-          <span class="metric-label">DevOps, Cloud & SRE Infrastructure</span>
+          <span class="metric-label"><span lang="en">DevOps, Cloud & SRE Infrastructure</span><span lang="pt">Infraestrutura DevOps, Cloud & SRE</span></span>
         </div>
         <div class="metric-card">
           <span class="metric-value">3 Clouds</span>
-          <span class="metric-label">GCP, AWS & OCI Enterprise Provisioning</span>
+          <span class="metric-label"><span lang="en">GCP, AWS & OCI Enterprise Provisioning</span><span lang="pt">Provisionamento Multi-Cloud (GCP, AWS, OCI)</span></span>
         </div>
         <div class="metric-card">
           <span class="metric-value">86+</span>
-          <span class="metric-label">Public Repositories & IaC Labs</span>
+          <span class="metric-label"><span lang="en">Public Repositories & IaC Labs</span><span lang="pt">Repositórios Públicos e Labs de IaC</span></span>
         </div>
         <div class="metric-card">
           <span class="metric-value">99.9%</span>
-          <span class="metric-label">Observability & High Availability Focus</span>
+          <span class="metric-label"><span lang="en">Observability & High Availability Focus</span><span lang="pt">Foco em Observabilidade & Alta Disponibilidade</span></span>
         </div>
       </div>
     </section>
@@ -1832,12 +2001,17 @@
          ======================================================================= -->
     <section id="about">
       <div class="section-header">
-        <span class="section-kicker">Profile Overview</span>
-        <h2 class="section-title">About & Focus Areas</h2>
+        <span class="section-kicker" lang="en">Profile Overview</span>
+        <span class="section-kicker" lang="pt">Visão Geral</span>
+        <h2 class="section-title" lang="en">About & Focus Areas</h2>
+        <h2 class="section-title" lang="pt">Sobre & Áreas de Atuação</h2>
       </div>
 
-      <p class="about-lead">
+      <p class="about-lead" lang="en">
         As a dedicated <strong>DevOps & Observability Engineer</strong>, I bridge software delivery and enterprise-grade infrastructure reliability. My background unites hands-on Linux system administration, Big Data DBA operations (Cloudera, Spark, Hive), and modern cloud-native practices (Kubernetes, Datadog APM, Terraform, CI/CD automation). With a postgraduate degree in Cloud Computing, I build scalable systems built to withstand production traffic and prevent downtime.
+      </p>
+      <p class="about-lead" lang="pt">
+        Como <strong>Engenheiro de DevOps & Observabilidade</strong> dedicado, conecto a entrega ágil de software à alta confiabilidade de infraestrutura corporativa. Minha trajetória une administração prática de sistemas Linux, operações de DBA em Big Data (Cloudera, Spark, Hive) e práticas modernas nativas em nuvem (Kubernetes, Datadog APM, Terraform, automação CI/CD). Com pós-graduação em Cloud Computing, desenvolvo sistemas escaláveis preparados para suportar tráfego crítico e evitar indisponibilidades.
       </p>
 
       <div class="pillars-grid">
@@ -1850,9 +2024,12 @@
               <path d="M6 20v-6"></path>
             </svg>
           </div>
-          <h3 class="pillar-title">Observability & SRE</h3>
-          <p class="pillar-desc">
+          <h3 class="pillar-title"><span lang="en">Observability & SRE</span><span lang="pt">Observabilidade & SRE</span></h3>
+          <p class="pillar-desc" lang="en">
             End-to-end monitoring using Datadog, Prometheus, Grafana, and Cloudera Manager. Implementing SLIs/SLOs, distributed tracing, automated alerting, and rapid incident triage.
+          </p>
+          <p class="pillar-desc" lang="pt">
+            Monitoramento ponta a ponta com Datadog, Prometheus, Grafana e Cloudera Manager. Implementação de SLIs/SLOs, distributed tracing (APM), alertas inteligentes e triagem rápida de incidentes.
           </p>
         </div>
 
@@ -1866,9 +2043,12 @@
               <line x1="6" y1="18" x2="6.01" y2="18"></line>
             </svg>
           </div>
-          <h3 class="pillar-title">Cloud & IaC</h3>
-          <p class="pillar-desc">
+          <h3 class="pillar-title"><span lang="en">Cloud & IaC</span><span lang="pt">Nuvem & IaC</span></h3>
+          <p class="pillar-desc" lang="en">
             Multi-cloud architecture on GCP, AWS, and OCI. Infrastructure as Code via Terraform and Ansible for repeatable, audited, and immutable environments.
+          </p>
+          <p class="pillar-desc" lang="pt">
+            Arquitetura multi-cloud em GCP, AWS e OCI. Infraestrutura como Código via Terraform e Ansible para ambientes repetíveis, auditados e imutáveis.
           </p>
         </div>
 
@@ -1881,9 +2061,12 @@
               <polyline points="2 12 12 17 22 12"></polyline>
             </svg>
           </div>
-          <h3 class="pillar-title">Containers & K8s</h3>
-          <p class="pillar-desc">
+          <h3 class="pillar-title"><span lang="en">Containers & K8s</span><span lang="pt">Containers & Kubernetes</span></h3>
+          <p class="pillar-desc" lang="en">
             Docker containerization, Kubernetes cluster management, Helm charts, ingress controllers, autoscaling (HPA), and zero-downtime rolling releases.
+          </p>
+          <p class="pillar-desc" lang="pt">
+            Containerização com Docker, gestão de clusters Kubernetes, charts Helm, ingress controllers, autoscaling (HPA) e deploys contínuos sem downtime.
           </p>
         </div>
 
@@ -1896,9 +2079,12 @@
               <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
             </svg>
           </div>
-          <h3 class="pillar-title">Big Data & DBA</h3>
-          <p class="pillar-desc">
+          <h3 class="pillar-title"><span lang="en">Big Data & DBA</span><span lang="pt">Big Data & DBA</span></h3>
+          <p class="pillar-desc" lang="en">
             Enterprise data lake administration: Cloudera Hadoop, Apache Hive, Spark/PySpark, Apache NiFi, Airflow pipelines, Superset, and database reliability.
+          </p>
+          <p class="pillar-desc" lang="pt">
+            Administração de data lakes corporativos: Cloudera Hadoop, Apache Hive, Spark/PySpark, pipelines Apache NiFi, Airflow, Superset e confiabilidade de bancos de dados.
           </p>
         </div>
       </div>
@@ -1909,19 +2095,21 @@
          ======================================================================= -->
     <section id="skills">
       <div class="section-header">
-        <span class="section-kicker">Competencies</span>
-        <h2 class="section-title">Technical Skill Matrix</h2>
+        <span class="section-kicker" lang="en">Competencies</span>
+        <span class="section-kicker" lang="pt">Competências</span>
+        <h2 class="section-title" lang="en">Technical Skill Matrix</h2>
+        <h2 class="section-title" lang="pt">Matriz de Habilidades Técnicas</h2>
       </div>
 
       <!-- Filter Tabs -->
       <div class="skill-filters" role="tablist">
-        <button class="filter-btn active" data-filter="all">All Skills</button>
-        <button class="filter-btn" data-filter="observability">Observability & SRE</button>
-        <button class="filter-btn" data-filter="cloud">Cloud & IaC</button>
-        <button class="filter-btn" data-filter="containers">Containers & K8s</button>
-        <button class="filter-btn" data-filter="bigdata">Big Data & DBA</button>
-        <button class="filter-btn" data-filter="cicd">CI/CD & DevSecOps</button>
-        <button class="filter-btn" data-filter="scripting">Scripting & OS</button>
+        <button class="filter-btn active" data-filter="all"><span lang="en">All Skills</span><span lang="pt">Todas as Habilidades</span></button>
+        <button class="filter-btn" data-filter="observability"><span lang="en">Observability & SRE</span><span lang="pt">Observabilidade & SRE</span></button>
+        <button class="filter-btn" data-filter="cloud"><span lang="en">Cloud & IaC</span><span lang="pt">Nuvem & IaC</span></button>
+        <button class="filter-btn" data-filter="containers"><span lang="en">Containers & K8s</span><span lang="pt">Containers & K8s</span></button>
+        <button class="filter-btn" data-filter="bigdata"><span lang="en">Big Data & DBA</span><span lang="pt">Big Data & DBA</span></button>
+        <button class="filter-btn" data-filter="cicd"><span lang="en">CI/CD & DevSecOps</span><span lang="pt">CI/CD & DevSecOps</span></button>
+        <button class="filter-btn" data-filter="scripting"><span lang="en">Scripting & OS</span><span lang="pt">Scripting & SO</span></button>
       </div>
 
       <!-- Skills Grid -->
@@ -1931,7 +2119,7 @@
           <div class="skill-badge-icon">DD</div>
           <div class="skill-meta">
             <span class="skill-name">Datadog</span>
-            <span class="skill-cat">APM, Logs & K8s Monitors</span>
+            <span class="skill-cat"><span lang="en">APM, Logs & K8s Monitors</span><span lang="pt">APM, Logs e Monitores K8s</span></span>
           </div>
         </div>
 
@@ -1939,7 +2127,7 @@
           <div class="skill-badge-icon">PM</div>
           <div class="skill-meta">
             <span class="skill-name">Prometheus</span>
-            <span class="skill-cat">Metrics & Alertmanager</span>
+            <span class="skill-cat"><span lang="en">Metrics & Alertmanager</span><span lang="pt">Métricas e Alertmanager</span></span>
           </div>
         </div>
 
@@ -1947,7 +2135,7 @@
           <div class="skill-badge-icon">GF</div>
           <div class="skill-meta">
             <span class="skill-name">Grafana</span>
-            <span class="skill-cat">Dashboards & Visuals</span>
+            <span class="skill-cat"><span lang="en">Dashboards & Visuals</span><span lang="pt">Dashboards e Visualizações</span></span>
           </div>
         </div>
 
@@ -1955,7 +2143,7 @@
           <div class="skill-badge-icon">CM</div>
           <div class="skill-meta">
             <span class="skill-name">Cloudera Manager</span>
-            <span class="skill-cat">Hadoop & Spark Observability</span>
+            <span class="skill-cat"><span lang="en">Hadoop & Spark Observability</span><span lang="pt">Observabilidade Hadoop e Spark</span></span>
           </div>
         </div>
 
@@ -1963,7 +2151,7 @@
           <div class="skill-badge-icon">SRE</div>
           <div class="skill-meta">
             <span class="skill-name">SRE Practices</span>
-            <span class="skill-cat">SLIs/SLOs, Incident Triage</span>
+            <span class="skill-cat"><span lang="en">SLIs/SLOs, Incident Triage</span><span lang="pt">SLIs/SLOs, Triagem de Incidentes</span></span>
           </div>
         </div>
 
@@ -1972,7 +2160,7 @@
           <div class="skill-badge-icon">GCP</div>
           <div class="skill-meta">
             <span class="skill-name">Google Cloud (GCP)</span>
-            <span class="skill-cat">GKE, Cloud Build, IAM, Storage</span>
+            <span class="skill-cat"><span lang="en">GKE, Cloud Build, IAM, Storage</span><span lang="pt">GKE, Cloud Build, IAM, Storage</span></span>
           </div>
         </div>
 
@@ -1980,7 +2168,7 @@
           <div class="skill-badge-icon">AWS</div>
           <div class="skill-meta">
             <span class="skill-name">Amazon Web Services</span>
-            <span class="skill-cat">EC2, S3, IAM, CloudWatch</span>
+            <span class="skill-cat"><span lang="en">EC2, S3, IAM, CloudWatch</span><span lang="pt">EC2, S3, IAM, CloudWatch</span></span>
           </div>
         </div>
 
@@ -1988,7 +2176,7 @@
           <div class="skill-badge-icon">OCI</div>
           <div class="skill-meta">
             <span class="skill-name">Oracle Cloud (OCI)</span>
-            <span class="skill-cat">Compute, VCN, Object Storage</span>
+            <span class="skill-cat"><span lang="en">Compute, VCN, Object Storage</span><span lang="pt">Compute, VCN, Object Storage</span></span>
           </div>
         </div>
 
@@ -1996,7 +2184,7 @@
           <div class="skill-badge-icon">TF</div>
           <div class="skill-meta">
             <span class="skill-name">Terraform</span>
-            <span class="skill-cat">Multi-Cloud IaC Modules</span>
+            <span class="skill-cat"><span lang="en">Multi-Cloud IaC Modules</span><span lang="pt">Módulos IaC Multi-Cloud</span></span>
           </div>
         </div>
 
@@ -2004,7 +2192,7 @@
           <div class="skill-badge-icon">ANS</div>
           <div class="skill-meta">
             <span class="skill-name">Ansible</span>
-            <span class="skill-cat">Configuration Management</span>
+            <span class="skill-cat"><span lang="en">Configuration Management</span><span lang="pt">Gestão de Configuração</span></span>
           </div>
         </div>
 
@@ -2013,7 +2201,7 @@
           <div class="skill-badge-icon">K8S</div>
           <div class="skill-meta">
             <span class="skill-name">Kubernetes</span>
-            <span class="skill-cat">Deployments, Pods, Services, HPA</span>
+            <span class="skill-cat"><span lang="en">Deployments, Pods, Services, HPA</span><span lang="pt">Deployments, Pods, Services, HPA</span></span>
           </div>
         </div>
 
@@ -2021,7 +2209,7 @@
           <div class="skill-badge-icon">DKR</div>
           <div class="skill-meta">
             <span class="skill-name">Docker</span>
-            <span class="skill-cat">Multi-Stage Builds, Images</span>
+            <span class="skill-cat"><span lang="en">Multi-Stage Builds, Images</span><span lang="pt">Builds Multi-Stage, Imagens</span></span>
           </div>
         </div>
 
@@ -2029,7 +2217,7 @@
           <div class="skill-badge-icon">HLM</div>
           <div class="skill-meta">
             <span class="skill-name">Helm</span>
-            <span class="skill-cat">Package & Release Management</span>
+            <span class="skill-cat"><span lang="en">Package & Release Management</span><span lang="pt">Gerenciamento de Pacotes e Releases</span></span>
           </div>
         </div>
 
@@ -2038,7 +2226,7 @@
           <div class="skill-badge-icon">HDP</div>
           <div class="skill-meta">
             <span class="skill-name">Cloudera Hadoop</span>
-            <span class="skill-cat">HDFS, YARN Administration</span>
+            <span class="skill-cat"><span lang="en">HDFS, YARN Administration</span><span lang="pt">Administração HDFS e YARN</span></span>
           </div>
         </div>
 
@@ -2046,7 +2234,7 @@
           <div class="skill-badge-icon">SPK</div>
           <div class="skill-meta">
             <span class="skill-name">Apache Spark & PySpark</span>
-            <span class="skill-cat">Batch Jobs & Cluster Tuning</span>
+            <span class="skill-cat"><span lang="en">Batch Jobs & Cluster Tuning</span><span lang="pt">Jobs Batch e Otimização de Cluster</span></span>
           </div>
         </div>
 
@@ -2054,7 +2242,7 @@
           <div class="skill-badge-icon">HIV</div>
           <div class="skill-meta">
             <span class="skill-name">Apache Hive</span>
-            <span class="skill-cat">Data Warehouse & Metastore</span>
+            <span class="skill-cat"><span lang="en">Data Warehouse & Metastore</span><span lang="pt">Data Warehouse e Metastore</span></span>
           </div>
         </div>
 
@@ -2062,7 +2250,7 @@
           <div class="skill-badge-icon">NFI</div>
           <div class="skill-meta">
             <span class="skill-name">Apache NiFi</span>
-            <span class="skill-cat">Data Ingestion & Flow ETL</span>
+            <span class="skill-cat"><span lang="en">Data Ingestion & Flow ETL</span><span lang="pt">Ingestão de Dados e Fluxo ETL</span></span>
           </div>
         </div>
 
@@ -2070,7 +2258,7 @@
           <div class="skill-badge-icon">AFW</div>
           <div class="skill-meta">
             <span class="skill-name">Apache Airflow</span>
-            <span class="skill-cat">DAG Orchestration & Schedulers</span>
+            <span class="skill-cat"><span lang="en">DAG Orchestration & Schedulers</span><span lang="pt">Orquestração de DAGs e Schedulers</span></span>
           </div>
         </div>
 
@@ -2078,7 +2266,7 @@
           <div class="skill-badge-icon">DBA</div>
           <div class="skill-meta">
             <span class="skill-name">DBA Operations</span>
-            <span class="skill-cat">Zeppelin, Superset & SQL</span>
+            <span class="skill-cat"><span lang="en">Zeppelin, Superset & SQL</span><span lang="pt">Zeppelin, Superset e Operações SQL</span></span>
           </div>
         </div>
 
@@ -2087,7 +2275,7 @@
           <div class="skill-badge-icon">AZP</div>
           <div class="skill-meta">
             <span class="skill-name">Azure DevOps & Pipelines</span>
-            <span class="skill-cat">YAML Automated Build/Release</span>
+            <span class="skill-cat"><span lang="en">YAML Automated Build/Release</span><span lang="pt">Pipelines Automatizados YAML</span></span>
           </div>
         </div>
 
@@ -2095,7 +2283,7 @@
           <div class="skill-badge-icon">GCB</div>
           <div class="skill-meta">
             <span class="skill-name">Google Cloud Build</span>
-            <span class="skill-cat">Serverless CI/CD Workflows</span>
+            <span class="skill-cat"><span lang="en">Serverless CI/CD Workflows</span><span lang="pt">Workflows de CI/CD Serverless</span></span>
           </div>
         </div>
 
@@ -2103,7 +2291,7 @@
           <div class="skill-badge-icon">SNR</div>
           <div class="skill-meta">
             <span class="skill-name">SonarQube</span>
-            <span class="skill-cat">Static Code Quality & Security</span>
+            <span class="skill-cat"><span lang="en">Static Code Quality & Security</span><span lang="pt">Qualidade e Segurança de Código Estático</span></span>
           </div>
         </div>
 
@@ -2111,7 +2299,7 @@
           <div class="skill-badge-icon">GIT</div>
           <div class="skill-meta">
             <span class="skill-name">Git & GitHub</span>
-            <span class="skill-cat">GitOps, Branching, PR Reviews</span>
+            <span class="skill-cat"><span lang="en">GitOps, Branching, PR Reviews</span><span lang="pt">GitOps, Branching e Revisão de PRs</span></span>
           </div>
         </div>
 
@@ -2120,7 +2308,7 @@
           <div class="skill-badge-icon">PY</div>
           <div class="skill-meta">
             <span class="skill-name">Python</span>
-            <span class="skill-cat">Automation, PySpark & APIs</span>
+            <span class="skill-cat"><span lang="en">Automation, PySpark & APIs</span><span lang="pt">Automação, PySpark e APIs</span></span>
           </div>
         </div>
 
@@ -2128,7 +2316,7 @@
           <div class="skill-badge-icon">SH</div>
           <div class="skill-meta">
             <span class="skill-name">Bash / Shell Scripting</span>
-            <span class="skill-cat">Linux Ops, Automation & Cron</span>
+            <span class="skill-cat"><span lang="en">Linux Ops, Automation & Cron</span><span lang="pt">Operações Linux, Automação e Cron</span></span>
           </div>
         </div>
 
@@ -2136,7 +2324,7 @@
           <div class="skill-badge-icon">LNX</div>
           <div class="skill-meta">
             <span class="skill-name">Linux System Administration</span>
-            <span class="skill-cat">RedHat, Debian, Ubuntu Server</span>
+            <span class="skill-cat"><span lang="en">RedHat, Debian, Ubuntu Server</span><span lang="pt">RedHat, Debian, Ubuntu Server</span></span>
           </div>
         </div>
       </div>
@@ -2147,8 +2335,10 @@
          ======================================================================= -->
     <section id="experience">
       <div class="section-header">
-        <span class="section-kicker">Career Journey</span>
-        <h2 class="section-title">Professional Experience</h2>
+        <span class="section-kicker" lang="en">Career Journey</span>
+        <span class="section-kicker" lang="pt">Trajetória Profissional</span>
+        <h2 class="section-title" lang="en">Professional Experience</h2>
+        <h2 class="section-title" lang="pt">Experiência Profissional</h2>
       </div>
 
       <div class="timeline">
@@ -2158,11 +2348,14 @@
           <div class="experience-card">
             <div class="exp-header">
               <div>
-                <h3 class="exp-role">Observability Engineer</h3>
+                <h3 class="exp-role">
+                  <span lang="en">Observability Engineer</span>
+                  <span lang="pt">Engenheiro de Observabilidade</span>
+                </h3>
                 <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; margin-top: 0.2rem;">
-                  <span class="exp-company" style="margin-top: 0;">Appoena · Full-time</span>
+                  <span class="exp-company" style="margin-top: 0;"><span lang="en">Appoena · Full-time</span><span lang="pt">Appoena · Tempo integral</span></span>
                   <span style="color: var(--text-muted);">·</span>
-                  <span style="font-size: 0.88rem; color: var(--text-secondary);">Barueri, São Paulo, Brazil · Remote</span>
+                  <span style="font-size: 0.88rem; color: var(--text-secondary);"><span lang="en">Barueri, São Paulo, Brazil · Remote</span><span lang="pt">Barueri, São Paulo, Brasil · Remoto</span></span>
                 </div>
               </div>
               <div class="exp-date">
@@ -2172,7 +2365,7 @@
                   <line x1="8" y1="2" x2="8" y2="6"></line>
                   <line x1="3" y1="10" x2="21" y2="10"></line>
                 </svg>
-                <span>Mar 2025 - Present · 1 yr 8 mos</span>
+                <span><span lang="en">Mar 2025 - Present · 1 yr 8 mos</span><span lang="pt">Mar 2025 - Presente · 1 ano 8 meses</span></span>
               </div>
             </div>
 
@@ -2181,37 +2374,37 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <polyline points="20 6 9 17 4 12"></polyline>
                 </svg>
-                <div>Focused on system reliability, performance, and availability in cloud and distributed environments.</div>
+                <div><span lang="en">Focused on system reliability, performance, and availability in cloud and distributed environments.</span><span lang="pt">Focado na confiabilidade, desempenho e disponibilidade de sistemas em ambientes de nuvem e distribuídos.</span></div>
               </li>
               <li class="achievement-item">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <polyline points="20 6 9 17 4 12"></polyline>
                 </svg>
-                <div>Designed and implemented end-to-end observability solutions using Datadog, covering metrics, logs, and traces.</div>
+                <div><span lang="en">Designed and implemented end-to-end observability solutions using Datadog, covering metrics, logs, and traces.</span><span lang="pt">Projetei e implementei soluções de observabilidade ponta a ponta com Datadog, cobrindo métricas, logs e traces.</span></div>
               </li>
               <li class="achievement-item">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <polyline points="20 6 9 17 4 12"></polyline>
                 </svg>
-                <div>Monitored and troubleshot Kubernetes and Docker environments, ensuring platform stability and fast incident response.</div>
+                <div><span lang="en">Monitored and troubleshot Kubernetes and Docker environments, ensuring platform stability and fast incident response.</span><span lang="pt">Monitorei e solucionei problemas em ambientes Kubernetes e Docker, garantindo estabilidade da plataforma e resposta rápida a incidentes.</span></div>
               </li>
               <li class="achievement-item">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <polyline points="20 6 9 17 4 12"></polyline>
                 </svg>
-                <div>Worked closely with DevOps and Infrastructure teams to support scalable and highly available architectures.</div>
+                <div><span lang="en">Worked closely with DevOps and Infrastructure teams to support scalable and highly available architectures.</span><span lang="pt">Atuei em estreita colaboração com equipes de DevOps e Infraestrutura para sustentar arquiteturas escaláveis e de alta disponibilidade.</span></div>
               </li>
               <li class="achievement-item">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <polyline points="20 6 9 17 4 12"></polyline>
                 </svg>
-                <div>Contributed to projects in multi-cloud environments (AWS, GCP, and Azure), improving resilience and operational visibility.</div>
+                <div><span lang="en">Contributed to projects in multi-cloud environments (AWS, GCP, and Azure), improving resilience and operational visibility.</span><span lang="pt">Contribuí em projetos em ambientes multi-cloud (AWS, GCP e Azure), aumentando a resiliência e a visibilidade operacional.</span></div>
               </li>
               <li class="achievement-item">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <polyline points="20 6 9 17 4 12"></polyline>
                 </svg>
-                <div>Developed and maintained automation scripts to streamline operations and reduce manual effort.</div>
+                <div><span lang="en">Developed and maintained automation scripts to streamline operations and reduce manual effort.</span><span lang="pt">Desenvolvi e mantive scripts de automação para agilizar operações e reduzir o esforço manual.</span></div>
               </li>
             </ul>
 
@@ -2235,7 +2428,7 @@
             <div class="exp-header">
               <div>
                 <h3 class="exp-role">DevOps Engineer | SysAdmin | DBA</h3>
-                <span class="exp-company">2RP Net · Full-time</span>
+                <span class="exp-company"><span lang="en">2RP Net · Full-time</span><span lang="pt">2RP Net · Tempo integral</span></span>
               </div>
               <div class="exp-date">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2244,12 +2437,15 @@
                   <line x1="8" y1="2" x2="8" y2="6"></line>
                   <line x1="3" y1="10" x2="21" y2="10"></line>
                 </svg>
-                <span>May 2022 - Nov 2024 · 2 yrs 7 mos</span>
+                <span><span lang="en">May 2022 - Nov 2024 · 2 yrs 7 mos</span><span lang="pt">Mai 2022 - Nov 2024 · 2 anos 7 meses</span></span>
               </div>
             </div>
 
-            <p class="exp-summary">
+            <p class="exp-summary" lang="en">
               Led cloud infrastructure reliability, automated CI/CD pipelines, and managed enterprise Big Data ecosystems across Google Cloud Platform (GCP) and Oracle Cloud Infrastructure (OCI). Acted as primary administrator for Cloudera clusters, Apache Hive/Spark pipelines, and Kubernetes microservices.
+            </p>
+            <p class="exp-summary" lang="pt">
+              Liderei a confiabilidade da infraestrutura em nuvem, pipelines automatizados de CI/CD e a gestão do ecossistema corporativo de Big Data no Google Cloud Platform (GCP) e Oracle Cloud Infrastructure (OCI). Atuei como administrador principal de clusters Cloudera, pipelines Apache Hive/Spark e microsserviços em Kubernetes.
             </p>
 
             <ul class="achievement-list">
@@ -2258,7 +2454,8 @@
                   <polyline points="20 6 9 17 4 12"></polyline>
                 </svg>
                 <div>
-                  <strong>Monitoring, Observability & Incident Response:</strong> Implemented robust health checks and monitoring processes for critical PySpark execution routines using Cloudera Manager, reducing Mean Time to Resolution (MTTR) through documented troubleshooting runbooks.
+                  <div lang="en"><strong>Monitoring, Observability & Incident Response:</strong> Implemented robust health checks and monitoring processes for critical PySpark execution routines using Cloudera Manager, reducing Mean Time to Resolution (MTTR) through documented troubleshooting runbooks.</div>
+                  <div lang="pt"><strong>Monitoramento, Observabilidade & Resposta a Incidentes:</strong> Implementação de rotinas de health check e monitoramento para execuções críticas em PySpark utilizando o Cloudera Manager, reduzindo o MTTR através de runbooks detalhados.</div>
                 </div>
               </li>
               <li class="achievement-item">
@@ -2266,7 +2463,8 @@
                   <polyline points="20 6 9 17 4 12"></polyline>
                 </svg>
                 <div>
-                  <strong>Automated CI/CD Delivery:</strong> Designed, deployed, and maintained automated continuous integration and continuous deployment pipelines using <strong>Azure DevOps Pipelines</strong> and <strong>Google Cloud Build</strong>, integrating SonarQube quality gates for static code analysis.
+                  <div lang="en"><strong>Automated CI/CD Delivery:</strong> Designed, deployed, and maintained automated continuous integration and continuous deployment pipelines using <strong>Azure DevOps Pipelines</strong> and <strong>Google Cloud Build</strong>, integrating SonarQube quality gates for static code analysis.</div>
+                  <div lang="pt"><strong>Entrega Contínua & CI/CD Automatizado:</strong> Desenho, implantação e sustentação de pipelines automatizados de CI/CD via <strong>Azure DevOps Pipelines</strong> e <strong>Google Cloud Build</strong>, integrando quality gates do SonarQube para análise estática de código.</div>
                 </div>
               </li>
               <li class="achievement-item">
@@ -2274,7 +2472,8 @@
                   <polyline points="20 6 9 17 4 12"></polyline>
                 </svg>
                 <div>
-                  <strong>Containerization & Orchestration:</strong> Authored optimized, multi-stage Dockerfiles and orchestrated containerized microservices in <strong>Kubernetes</strong> clusters, ensuring scalability, load balancing, and high availability.
+                  <div lang="en"><strong>Containerization & Orchestration:</strong> Authored optimized, multi-stage Dockerfiles and orchestrated containerized microservices in <strong>Kubernetes</strong> clusters, ensuring scalability, load balancing, and high availability.</div>
+                  <div lang="pt"><strong>Containerização & Orquestração:</strong> Criação de Dockerfiles otimizados multi-stage e orquestração de microsserviços containerizados em clusters <strong>Kubernetes</strong>, garantindo escalabilidade, balanceamento de carga e alta disponibilidade.</div>
                 </div>
               </li>
               <li class="achievement-item">
@@ -2282,7 +2481,8 @@
                   <polyline points="20 6 9 17 4 12"></polyline>
                 </svg>
                 <div>
-                  <strong>Enterprise Big Data Management:</strong> Configured and administered Cloudera Hadoop, Apache Hive, Apache NiFi, Airflow DAGs, and Apache Zeppelin/Superset as operational DBA, ensuring data consistency and performant SQL querying.
+                  <div lang="en"><strong>Enterprise Big Data Management:</strong> Configured and administered Cloudera Hadoop, Apache Hive, Apache NiFi, Airflow DAGs, and Apache Zeppelin/Superset as operational DBA, ensuring data consistency and performant SQL querying.</div>
+                  <div lang="pt"><strong>Gestão de Big Data Corporativo:</strong> Configuração e administração de Cloudera Hadoop, Apache Hive, Apache NiFi, DAGs no Airflow e Apache Zeppelin/Superset como DBA operacional, assegurando consistência dos dados e consultas SQL de alta performance.</div>
                 </div>
               </li>
               <li class="achievement-item">
@@ -2290,7 +2490,8 @@
                   <polyline points="20 6 9 17 4 12"></polyline>
                 </svg>
                 <div>
-                  <strong>Automation & Tooling:</strong> Automated administrative routines and infrastructure maintenance scripts using Python and Bash, slashing repetitive manual toil.
+                  <div lang="en"><strong>Automation & Tooling:</strong> Automated administrative routines and infrastructure maintenance scripts using Python and Bash, slashing repetitive manual toil.</div>
+                  <div lang="pt"><strong>Automação & Ferramental:</strong> Automação de rotinas administrativas e scripts de manutenção de infraestrutura com Python e Bash, reduzindo trabalho manual repetitivo.</div>
                 </div>
               </li>
               <li class="achievement-item">
@@ -2298,7 +2499,8 @@
                   <polyline points="20 6 9 17 4 12"></polyline>
                 </svg>
                 <div>
-                  <strong>Agile Collaboration:</strong> Active participant in Scrum ceremonies (daily stand-ups, sprint planning, retrospectives) collaborating with cross-functional data science and software engineering teams.
+                  <div lang="en"><strong>Agile Collaboration:</strong> Active participant in Scrum ceremonies (daily stand-ups, sprint planning, retrospectives) collaborating with cross-functional data science and software engineering teams.</div>
+                  <div lang="pt"><strong>Colaboração Ágil:</strong> Participação ativa em cerimônias Scrum (dailies, planejamentos de sprint, retrospectivas) em colaboração direta com times multidisciplinares de ciência de dados e engenharia de software.</div>
                 </div>
               </li>
             </ul>
@@ -2330,8 +2532,10 @@
          ======================================================================= -->
     <section id="projects">
       <div class="section-header">
-        <span class="section-kicker">Portfolio Highlights</span>
-        <h2 class="section-title">Featured Projects</h2>
+        <span class="section-kicker" lang="en">Portfolio Highlights</span>
+        <span class="section-kicker" lang="pt">Destaques do Portfólio</span>
+        <h2 class="section-title" lang="en">Featured Projects</h2>
+        <h2 class="section-title" lang="pt">Projetos em Destaque</h2>
       </div>
 
       <div class="projects-grid">
@@ -2349,9 +2553,12 @@
                 </svg>
               </a>
             </div>
-            <h3 class="project-title">Datadog Observability Engineering Stack</h3>
-            <p class="project-desc">
+            <h3 class="project-title"><span lang="en">Datadog Observability Engineering Stack</span><span lang="pt">Stack de Engenharia de Observabilidade Datadog</span></h3>
+            <p class="project-desc" lang="en">
               Comprehensive Kubernetes observability architecture featuring Datadog DaemonSet agents, cluster checks, custom monitors, log pipelines, APM distributed tracing, and synthetic health tests across polyglot microservices.
+            </p>
+            <p class="project-desc" lang="pt">
+              Arquitetura completa de observabilidade para Kubernetes com agentes DaemonSet Datadog, cluster checks, monitores customizados, pipelines de logs, distributed tracing com APM e testes sintéticos em microsserviços poliglotas.
             </p>
           </div>
           <div class="tech-pill-list">
@@ -2378,9 +2585,12 @@
                 </svg>
               </a>
             </div>
-            <h3 class="project-title">Dynamic Autoscaling & Workload Management</h3>
-            <p class="project-desc">
+            <h3 class="project-title"><span lang="en">Dynamic Autoscaling & Workload Management</span><span lang="pt">Autoscaling Dinâmico & Gestão de Cargas de Trabalho</span></h3>
+            <p class="project-desc" lang="en">
               Cloud-native autoscaling framework demonstrating horizontal pod autoscaling (HPA), workload traffic simulation, resource throttling optimization, and proactive scaling triggers under bursty compute loads.
+            </p>
+            <p class="project-desc" lang="pt">
+              Framework nativo em nuvem demonstrando Horizontal Pod Autoscaler (HPA), simulação de tráfego de carga, otimização de recursos e gatilhos preditivos sob picos de demanda computacional.
             </p>
           </div>
           <div class="tech-pill-list">
@@ -2405,9 +2615,12 @@
                 </svg>
               </a>
             </div>
-            <h3 class="project-title">read_repos · Repository Architecture Analyzer</h3>
-            <p class="project-desc">
+            <h3 class="project-title"><span lang="en">read_repos · Repository Architecture Analyzer</span><span lang="pt">read_repos · Analisador de Arquitetura de Repositórios</span></h3>
+            <p class="project-desc" lang="en">
               Automation CLI tool developed in Python to recursively inspect repository trees, map dependency declarations, analyze codebase structures, and produce comprehensive architecture audits for DevOps workflows.
+            </p>
+            <p class="project-desc" lang="pt">
+              Ferramenta CLI de automação desenvolvida em Python para inspeção recursiva de repositórios, mapeamento de dependências, análise de estruturas de código e geração de auditorias de arquitetura para fluxos DevOps.
             </p>
           </div>
           <div class="tech-pill-list">
@@ -2432,9 +2645,12 @@
                 </svg>
               </a>
             </div>
-            <h3 class="project-title">script-imports · Operational Automation Suite</h3>
-            <p class="project-desc">
+            <h3 class="project-title"><span lang="en">script-imports · Operational Automation Suite</span><span lang="pt">script-imports · Suite de Automação Operacional</span></h3>
+            <p class="project-desc" lang="en">
               Reusable Python and Bash automation library designed for environment setup, process management, log ingestion utilities, and routine sysadmin operations across Linux systems.
+            </p>
+            <p class="project-desc" lang="pt">
+              Biblioteca reutilizável de automação em Python e Bash projetada para provisionamento de ambientes, gerenciamento de processos, ingestão de logs e operações de rotina de sysadmin em servidores Linux.
             </p>
           </div>
           <div class="tech-pill-list">
@@ -2452,8 +2668,10 @@
          ======================================================================= -->
     <section id="education">
       <div class="section-header">
-        <span class="section-kicker">Academic & Continuous Learning</span>
-        <h2 class="section-title">Education & Courses</h2>
+        <span class="section-kicker" lang="en">Academic & Continuous Learning</span>
+        <span class="section-kicker" lang="pt">Formação & Aperfeiçoamento Contínuo</span>
+        <h2 class="section-title" lang="en">Education & Courses</h2>
+        <h2 class="section-title" lang="pt">Formação Acadêmica & Cursos</h2>
       </div>
 
       <div class="edu-cert-container">
@@ -2464,19 +2682,19 @@
               <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
               <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
             </svg>
-            <span>Higher Education</span>
+            <span><span lang="en">Higher Education</span><span lang="pt">Ensino Superior & Pós-Graduação</span></span>
           </h3>
 
           <div class="edu-card">
-            <h4 class="edu-degree">Postgraduate Degree, Cloud Computing</h4>
+            <h4 class="edu-degree"><span lang="en">Postgraduate Degree, Cloud Computing</span><span lang="pt">Pós-Graduação, Computação em Nuvem (Cloud Computing)</span></h4>
             <div class="edu-institution">Universidade da Amazônia - UNAMA</div>
-            <div class="edu-period">March 2024 - October 2024</div>
+            <div class="edu-period"><span lang="en">March 2024 - October 2024</span><span lang="pt">Março de 2024 - Outubro de 2024</span></div>
           </div>
 
           <div class="edu-card">
             <h4 class="edu-degree">Curso Superior de Tecnologia (CST), DevOps</h4>
             <div class="edu-institution">UNOPAR - Universidade Norte do Paraná</div>
-            <div class="edu-period">January 2022 - January 2024</div>
+            <div class="edu-period"><span lang="en">January 2022 - January 2024</span><span lang="pt">Janeiro de 2022 - Janeiro de 2024</span></div>
           </div>
         </div>
 
@@ -2487,7 +2705,7 @@
               <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
               <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
             </svg>
-            <span>Courses & Technical Training</span>
+            <span><span lang="en">Courses & Technical Training</span><span lang="pt">Cursos & Treinamentos Técnicos</span></span>
           </h3>
 
           <div class="cert-card">
@@ -2497,7 +2715,7 @@
               </svg>
               <div>
                 <div class="cert-title">Datadog Observability Engineering</div>
-                <div class="cert-issuer">Hands-on Production Implementation & Monitors</div>
+                <div class="cert-issuer"><span lang="en">Hands-on Production Implementation & Monitors</span><span lang="pt">Implementação Prática em Produção e Monitores</span></div>
               </div>
             </div>
 
@@ -2537,7 +2755,7 @@
               </svg>
               <div>
                 <div class="cert-title">Desafio Docker, Kubernetes, AWS, Grafana & Prometheus</div>
-                <div class="cert-issuer">Hands-on DevOps Labs</div>
+                <div class="cert-issuer"><span lang="en">Hands-on DevOps Labs</span><span lang="pt">Labs Práticos de DevOps</span></div>
               </div>
             </div>
 
@@ -2547,7 +2765,7 @@
               </svg>
               <div>
                 <div class="cert-title">Trilha DevOps Specialist</div>
-                <div class="cert-issuer">Specialization Program</div>
+                <div class="cert-issuer"><span lang="en">Specialization Program</span><span lang="pt">Programa de Especialização</span></div>
               </div>
             </div>
           </div>
@@ -2560,16 +2778,20 @@
          ======================================================================= -->
     <section id="contact">
       <div class="contact-cta">
-        <h2 class="contact-title">Let's Build Resilient Infrastructure Together</h2>
-        <p class="contact-subtitle">
+        <h2 class="contact-title" lang="en">Let's Build Resilient Infrastructure Together</h2>
+        <h2 class="contact-title" lang="pt">Vamos Construir Infraestruturas Resilientes Juntos</h2>
+        <p class="contact-subtitle" lang="en">
           I'm actively open to DevOps Engineer, Observability Engineer, and Cloud Architect roles. Whether you want to discuss a full-time position, contract work, or cloud migration, feel free to reach out.
+        </p>
+        <p class="contact-subtitle" lang="pt">
+          Estou aberto a oportunidades como Engenheiro de DevOps, Engenheiro de Observabilidade e Arquiteto Cloud. Seja para posições em tempo integral, consultoria ou projetos de migração para nuvem, fique à vontade para entrar em contato.
         </p>
         <div class="cta-actions">
           <a href="https://wa.me/5554996277371" target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="ctaWhatsAppBtn">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
             </svg>
-            <span id="ctaWhatsAppText">Message on WhatsApp</span>
+            <span id="ctaWhatsAppText"><span lang="en">Message on WhatsApp</span><span lang="pt">Conversar no WhatsApp</span></span>
           </a>
 
           <a href="mailto:araujoaojoao@gmail.com" class="btn btn-outline" id="ctaEmailBtn">
@@ -2577,7 +2799,7 @@
               <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
               <polyline points="22,6 12,13 2,6"></polyline>
             </svg>
-            <span id="ctaEmailText">Send Email</span>
+            <span id="ctaEmailText"><span lang="en">Send Email</span><span lang="pt">Enviar E-mail</span></span>
           </a>
 
           <a href="https://www.linkedin.com/in/araujojoao84/" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
@@ -2586,7 +2808,7 @@
               <rect x="2" y="9" width="4" height="12"></rect>
               <circle cx="4" cy="4" r="2"></circle>
             </svg>
-            <span>Connect on LinkedIn</span>
+            <span><span lang="en">Connect on LinkedIn</span><span lang="pt">Conectar no LinkedIn</span></span>
           </a>
         </div>
       </div>
@@ -2642,13 +2864,13 @@
   <footer>
     <div class="container footer-inner">
       <div>
-        <p>&copy; <span id="year">2026</span> João Araújo. Designed for high reliability & performance.</p>
+        <p>&copy; <span id="year">2026</span> João Araújo. <span lang="en">Designed for high reliability & performance.</span><span lang="pt">Projetado para alta confiabilidade e performance.</span></p>
       </div>
       <div class="footer-links">
         <a href="https://github.com/araujoajoao" target="_blank" rel="noopener noreferrer">GitHub</a>
         <a href="https://www.linkedin.com/in/araujojoao84/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
         <a href="https://wa.me/5554996277371" target="_blank" rel="noopener noreferrer">WhatsApp</a>
-        <a href="#navbar">Back to Top ↑</a>
+        <a href="#navbar"><span lang="en">Back to Top ↑</span><span lang="pt">Voltar ao Topo ↑</span></a>
       </div>
     </div>
   </footer>
@@ -2817,7 +3039,7 @@
         }
 
         if (showNotice && !document.hidden) {
-          showToast('🔒 Contatos protegidos novamente (1m sem atividade)');
+          showToast(currentLang === 'pt' ? '🔒 Contatos protegidos novamente (1m sem atividade)' : '🔒 Contacts re-locked due to inactivity (1m)');
         }
       }
 
@@ -2899,9 +3121,9 @@
           if (!isRevealed) {
             applyRevealedState(true);
             navigator.clipboard.writeText(FULL_EMAIL).then(() => {
-              showToast('✅ E-mail revelado e copiado: ' + FULL_EMAIL);
+              showToast(currentLang === 'pt' ? '✅ E-mail revelado e copiado: ' + FULL_EMAIL : '✅ Email revealed and copied: ' + FULL_EMAIL);
             }).catch(() => {
-              showToast('✅ E-mail revelado: ' + FULL_EMAIL);
+              showToast(currentLang === 'pt' ? '✅ E-mail revelado: ' + FULL_EMAIL : '✅ Email revealed: ' + FULL_EMAIL);
             });
           } else {
             resetInactivityTimer();
@@ -2920,7 +3142,7 @@
         phonePill.addEventListener('click', () => {
           if (!isRevealed) {
             applyRevealedState(true);
-            showToast('✅ WhatsApp revelado: ' + FULL_PHONE);
+            showToast(currentLang === 'pt' ? '✅ WhatsApp revelado: ' + FULL_PHONE : '✅ WhatsApp revealed: ' + FULL_PHONE);
           } else {
             resetInactivityTimer();
             window.open(WHATSAPP_URL, '_blank');
@@ -2937,13 +3159,79 @@
       if (copyEmailBtn) {
         copyEmailBtn.addEventListener('click', () => {
           applyRevealedState(true);
+          const copyMsg = currentLang === 'pt' ? 'Email ' + FULL_EMAIL + ' copiado!' : 'Email ' + FULL_EMAIL + ' copied to clipboard!';
           navigator.clipboard.writeText(FULL_EMAIL).then(() => {
-            showToast('Email ' + FULL_EMAIL + ' copiado!');
+            showToast(copyMsg);
           }).catch(() => {
             showToast('Email: ' + FULL_EMAIL);
           });
         });
       }
+
+      // 9. Language Tab Switching (EN / PT-BR)
+      let currentLang = 'en';
+      const langTabs = document.querySelectorAll('[data-lang]');
+
+      function setLanguage(lang, updateUrl = true) {
+        currentLang = lang === 'pt' ? 'pt' : 'en';
+        document.documentElement.lang = currentLang === 'pt' ? 'pt-BR' : 'en';
+        document.body.setAttribute('data-lang', currentLang);
+        try {
+          localStorage.setItem('araujo_resume_lang', currentLang);
+        } catch (e) {}
+
+        langTabs.forEach(el => {
+          const isActive = el.getAttribute('data-lang') === currentLang;
+          el.classList.toggle('active', isActive);
+          if (el.hasAttribute('aria-selected')) {
+            el.setAttribute('aria-selected', isActive ? 'true' : 'false');
+          }
+        });
+
+        // Update badge text according to active language
+        const isPt = currentLang === 'pt';
+        const lockText = isPt ? 'Revelar' : 'Reveal';
+        const revealedText = isPt ? 'Revelado' : 'Revealed';
+        [emailLockBadge, phoneLockBadge].forEach(badge => {
+          if (!badge) return;
+          const textEl = badge.querySelector('.badge-lock-text');
+          if (textEl) textEl.textContent = isRevealed ? revealedText : lockText;
+        });
+
+        if (updateUrl && history.replaceState) {
+          const newHash = currentLang === 'pt' ? '#pt' : '#en';
+          history.replaceState(null, '', newHash);
+        }
+      }
+
+      langTabs.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const targetLang = btn.getAttribute('data-lang');
+          if (targetLang && targetLang !== currentLang) {
+            setLanguage(targetLang);
+            const notice = targetLang === 'pt' ? '🇧🇷 Versão em Português ativada' : '🇺🇸 English version activated';
+            showToast(notice);
+          }
+          if (mobileNav) mobileNav.classList.remove('open');
+        });
+      });
+
+      // Initial language resolution: URL hash -> localStorage -> browser language
+      const hash = (window.location.hash || '').toLowerCase();
+      const searchParams = new URLSearchParams(window.location.search);
+      const urlLang = searchParams.get('lang') || (hash.includes('pt') ? 'pt' : hash.includes('en') ? 'en' : null);
+      let initialLang = urlLang;
+      if (!initialLang) {
+        try {
+          initialLang = localStorage.getItem('araujo_resume_lang');
+        } catch (e) {}
+      }
+      if (!initialLang) {
+        const browserLang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+        if (browserLang.startsWith('pt')) initialLang = 'pt';
+      }
+      setLanguage(initialLang === 'pt' ? 'pt' : 'en', false);
     })();
   </script>
 </body>

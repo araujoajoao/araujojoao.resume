@@ -3120,6 +3120,21 @@
           phoneLockBadge.classList.remove('revealed');
         }
 
+        // Revert hrefs when locked
+        if (ctaEmailBtn) ctaEmailBtn.href = 'javascript:void(0)';
+        if (ctaWhatsAppBtn) {
+          ctaWhatsAppBtn.href = 'javascript:void(0)';
+          ctaWhatsAppBtn.removeAttribute('target');
+        }
+        if (heroWhatsAppBtn) {
+          heroWhatsAppBtn.href = 'javascript:void(0)';
+          heroWhatsAppBtn.removeAttribute('target');
+        }
+        if (footerWhatsAppBtn) {
+          footerWhatsAppBtn.href = 'javascript:void(0)';
+          footerWhatsAppBtn.removeAttribute('target');
+        }
+
         if (showNotice && !document.hidden) {
           showToast(currentLang === 'pt' ? '🔒 Contatos bloqueados por inatividade (1m). Confirme novamente para liberar.' : '🔒 Contacts locked due to inactivity (1m). Please re-verify to unlock.');
         }
@@ -3152,6 +3167,24 @@
         if (phoneLockBadge) {
           phoneLockBadge.innerHTML = getRevealedBadgeHTML();
           phoneLockBadge.classList.add('revealed');
+        }
+
+        // Activate native hrefs when unlocked
+        if (ctaEmailBtn) ctaEmailBtn.href = MAILTO_URL;
+        if (ctaWhatsAppBtn) {
+          ctaWhatsAppBtn.href = WHATSAPP_URL;
+          ctaWhatsAppBtn.target = '_blank';
+          ctaWhatsAppBtn.rel = 'noopener noreferrer';
+        }
+        if (heroWhatsAppBtn) {
+          heroWhatsAppBtn.href = WHATSAPP_URL;
+          heroWhatsAppBtn.target = '_blank';
+          heroWhatsAppBtn.rel = 'noopener noreferrer';
+        }
+        if (footerWhatsAppBtn) {
+          footerWhatsAppBtn.href = WHATSAPP_URL;
+          footerWhatsAppBtn.target = '_blank';
+          footerWhatsAppBtn.rel = 'noopener noreferrer';
         }
 
         if (resetTimer) {
@@ -3188,12 +3221,11 @@
 
       // WhatsApp buttons: require confirmation if locked
       function handleWhatsAppRequest(e) {
-        if (e) e.preventDefault();
-        if (isRevealed) {
-          resetInactivityTimer();
-          window.open(WHATSAPP_URL, '_blank');
-        } else {
+        if (!isRevealed) {
+          if (e) e.preventDefault();
           openSecurityModal('whatsapp');
+        } else {
+          resetInactivityTimer();
         }
       }
 
@@ -3209,7 +3241,13 @@
             openSecurityModal('email');
           } else {
             resetInactivityTimer();
-            window.location.href = MAILTO_URL;
+            navigator.clipboard.writeText(FULL_EMAIL).catch(() => {});
+            showToast(currentLang === 'pt' ? '✅ Abrindo e-mail (' + FULL_EMAIL + ')' : '✅ Opening email (' + FULL_EMAIL + ')');
+            const trigger = document.createElement('a');
+            trigger.href = MAILTO_URL;
+            document.body.appendChild(trigger);
+            trigger.click();
+            trigger.remove();
           }
         });
         emailPill.addEventListener('keydown', (e) => {
@@ -3260,12 +3298,13 @@
       // CTA Send Email button: requires confirmation if locked
       if (ctaEmailBtn) {
         ctaEmailBtn.addEventListener('click', (e) => {
-          if (e) e.preventDefault();
           if (!isRevealed) {
+            if (e) e.preventDefault();
             openSecurityModal('email');
           } else {
             resetInactivityTimer();
-            window.location.href = MAILTO_URL;
+            navigator.clipboard.writeText(FULL_EMAIL).catch(() => {});
+            showToast(currentLang === 'pt' ? '✅ Abrindo e-mail (' + FULL_EMAIL + ')' : '✅ Opening email (' + FULL_EMAIL + ')');
           }
         });
       }
@@ -3314,17 +3353,24 @@
               ? '✅ Olá, ' + visitor + '! Abrindo WhatsApp...'
               : '✅ Welcome, ' + visitor + '! Opening WhatsApp...';
             showToast(msg);
-            setTimeout(() => {
-              window.open(WHATSAPP_URL, '_blank');
-            }, 350);
+            const trigger = document.createElement('a');
+            trigger.href = WHATSAPP_URL;
+            trigger.target = '_blank';
+            trigger.rel = 'noopener noreferrer';
+            document.body.appendChild(trigger);
+            trigger.click();
+            trigger.remove();
           } else if (action === 'email') {
+            navigator.clipboard.writeText(FULL_EMAIL).catch(() => {});
             const msg = currentLang === 'pt'
-              ? '✅ Olá, ' + visitor + '! Abrindo e-mail...'
-              : '✅ Welcome, ' + visitor + '! Opening email client...';
+              ? '✅ Olá, ' + visitor + '! Abrindo e-mail (' + FULL_EMAIL + ')...'
+              : '✅ Welcome, ' + visitor + '! Opening email (' + FULL_EMAIL + ')...';
             showToast(msg);
-            setTimeout(() => {
-              window.location.href = MAILTO_URL;
-            }, 350);
+            const trigger = document.createElement('a');
+            trigger.href = MAILTO_URL;
+            document.body.appendChild(trigger);
+            trigger.click();
+            trigger.remove();
           } else if (action === 'copy_email') {
             navigator.clipboard.writeText(FULL_EMAIL).then(() => {
               const copyMsg = currentLang === 'pt' ? '✅ Olá, ' + visitor + '! E-mail copiado: ' + FULL_EMAIL : '✅ Welcome, ' + visitor + '! Email copied: ' + FULL_EMAIL;

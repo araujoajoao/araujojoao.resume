@@ -1443,6 +1443,11 @@
       box-shadow: 0 0 0 3px var(--accent-cyan-glow);
     }
 
+    .form-input.input-error {
+      border-color: #ef4444 !important;
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.25) !important;
+    }
+
     .human-check-box {
       background: var(--bg-surface);
       border: 1px solid var(--border-subtle);
@@ -2825,17 +2830,25 @@
         <span lang="pt">Confirmação de Identidade & Segurança</span>
       </h3>
       <p class="modal-desc" id="modalDesc">
-        <span lang="en">To protect against automated crawlers and scrapers, please confirm who you are to access João Araújo's direct contacts.</span>
-        <span lang="pt">Para proteção contra bots e scrapers automáticos, confirme quem você é para acessar os contatos diretos de João Araújo.</span>
+        <span lang="en">To protect against automated crawlers and scrapers, please provide your name and a valid professional email to unlock João Araújo's direct contacts.</span>
+        <span lang="pt">Para proteção contra bots e scrapers automatizados, informe seu nome e um e-mail profissional válido para liberar os contatos diretos de João Araújo.</span>
       </p>
 
       <form id="verifyForm" class="modal-form" onsubmit="return false;">
         <div class="form-group">
           <label for="verifierName" class="form-label">
-            <span lang="en">Who is accessing? (Your Name & Company) <span style="color: var(--accent-cyan);">*</span></span>
-            <span lang="pt">Quem está acessando? (Seu Nome e Empresa) <span style="color: var(--accent-cyan);">*</span></span>
+            <span lang="en">Your Name & Company <span style="color: var(--accent-cyan);">*</span></span>
+            <span lang="pt">Seu Nome e Empresa <span style="color: var(--accent-cyan);">*</span></span>
           </label>
           <input type="text" id="verifierName" class="form-input" placeholder="Ex: Maria Santos (Tech Recruiter - Google)" required autocomplete="name">
+        </div>
+
+        <div class="form-group">
+          <label for="verifierEmail" class="form-label">
+            <span lang="en">Your Professional Email <span style="color: var(--accent-cyan);">*</span></span>
+            <span lang="pt">Seu E-mail Profissional <span style="color: var(--accent-cyan);">*</span></span>
+          </label>
+          <input type="email" id="verifierEmail" class="form-input" placeholder="Ex: recruiter@company.com" required autocomplete="email">
         </div>
 
         <div class="human-check-box" id="humanCheckWrap">
@@ -3027,6 +3040,7 @@
       const modalCloseBtn = document.getElementById('modalCloseBtn');
       const verifyForm = document.getElementById('verifyForm');
       const verifierName = document.getElementById('verifierName');
+      const verifierEmail = document.getElementById('verifierEmail');
       const humanCheck = document.getElementById('humanCheck');
       const humanCheckWrap = document.getElementById('humanCheckWrap');
       const confirmRevealBtnText = document.getElementById('confirmRevealBtnText');
@@ -3063,6 +3077,10 @@
         if (verifierName) {
           verifierName.value = '';
           verifierName.classList.remove('input-error');
+        }
+        if (verifierEmail) {
+          verifierEmail.value = '';
+          verifierEmail.classList.remove('input-error');
         }
 
         if (confirmRevealBtnText) {
@@ -3320,6 +3338,18 @@
         });
       }
 
+      if (verifierName) {
+        verifierName.addEventListener('input', () => {
+          verifierName.classList.remove('input-error');
+        });
+      }
+
+      if (verifierEmail) {
+        verifierEmail.addEventListener('input', () => {
+          verifierEmail.classList.remove('input-error');
+        });
+      }
+
       if (verifyForm) {
         verifyForm.addEventListener('submit', (e) => {
           e.preventDefault();
@@ -3327,7 +3357,21 @@
           const visitor = (verifierName && verifierName.value.trim()) || '';
           if (!visitor || visitor.length < 2) {
             showToast(currentLang === 'pt' ? '⚠️ Por favor, informe seu nome ou empresa para liberar.' : '⚠️ Please provide your name or company to unlock.');
-            if (verifierName) verifierName.focus();
+            if (verifierName) {
+              verifierName.focus();
+              verifierName.classList.add('input-error');
+            }
+            return;
+          }
+
+          const emailVal = (verifierEmail && verifierEmail.value.trim().toLowerCase()) || '';
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+          if (!emailVal || !emailRegex.test(emailVal)) {
+            showToast(currentLang === 'pt' ? '⚠️ Por favor, informe um e-mail válido (ex: seu.nome@empresa.com).' : '⚠️ Please provide a valid email address (e.g. your.name@company.com).');
+            if (verifierEmail) {
+              verifierEmail.focus();
+              verifierEmail.classList.add('input-error');
+            }
             return;
           }
 
@@ -3345,8 +3389,8 @@
 
           if (action === 'whatsapp') {
             const msg = currentLang === 'pt'
-              ? '✅ Olá, ' + visitor + '! Abrindo WhatsApp...'
-              : '✅ Welcome, ' + visitor + '! Opening WhatsApp...';
+              ? '✅ Acesso liberado! Olá, ' + visitor + ' (' + emailVal + '). Abrindo WhatsApp...'
+              : '✅ Access granted! Welcome, ' + visitor + ' (' + emailVal + '). Opening WhatsApp...';
             showToast(msg);
             const trigger = document.createElement('a');
             trigger.href = WHATSAPP_URL;
@@ -3358,8 +3402,8 @@
           } else if (action === 'email') {
             navigator.clipboard.writeText(FULL_EMAIL).catch(() => {});
             const msg = currentLang === 'pt'
-              ? '✅ Olá, ' + visitor + '! Abrindo e-mail (' + FULL_EMAIL + ')...'
-              : '✅ Welcome, ' + visitor + '! Opening email (' + FULL_EMAIL + ')...';
+              ? '✅ Acesso liberado! Olá, ' + visitor + '. Abrindo e-mail (' + FULL_EMAIL + ')...'
+              : '✅ Access granted! Welcome, ' + visitor + '. Opening email (' + FULL_EMAIL + ')...';
             showToast(msg);
             const trigger = document.createElement('a');
             trigger.href = MAILTO_URL;
@@ -3368,15 +3412,15 @@
             trigger.remove();
           } else if (action === 'copy_email') {
             navigator.clipboard.writeText(FULL_EMAIL).then(() => {
-              const copyMsg = currentLang === 'pt' ? '✅ Olá, ' + visitor + '! E-mail copiado: ' + FULL_EMAIL : '✅ Welcome, ' + visitor + '! Email copied: ' + FULL_EMAIL;
+              const copyMsg = currentLang === 'pt' ? '✅ Acesso liberado para ' + emailVal + '! E-mail copiado: ' + FULL_EMAIL : '✅ Access granted for ' + emailVal + '! Email copied: ' + FULL_EMAIL;
               showToast(copyMsg);
             }).catch(() => {
               showToast('Email: ' + FULL_EMAIL);
             });
           } else if (action === 'phone') {
             const msg = currentLang === 'pt'
-              ? '✅ Olá, ' + visitor + '! Telefone liberado: ' + FULL_PHONE
-              : '✅ Welcome, ' + visitor + '! Phone unlocked: ' + FULL_PHONE;
+              ? '✅ Acesso liberado para ' + emailVal + '! Telefone liberado: ' + FULL_PHONE
+              : '✅ Access granted for ' + emailVal + '! Phone unlocked: ' + FULL_PHONE;
             showToast(msg);
           }
         });

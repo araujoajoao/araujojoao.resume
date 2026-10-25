@@ -226,25 +226,40 @@
     }
 
     .brand-devops-icon {
-      width: 46px;
-      height: 26px;
+      height: 34px;
+      width: auto;
+      max-width: 76px;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      filter: drop-shadow(0 0 10px rgba(6, 182, 212, 0.45));
+      filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.35));
       transition: filter var(--transition-fast), transform var(--transition-fast);
     }
 
     .brand-logo:hover .brand-devops-icon {
-      filter: drop-shadow(0 0 16px rgba(6, 182, 212, 0.8));
+      filter: drop-shadow(0 0 16px rgba(16, 185, 129, 0.65));
       transform: scale(1.04);
     }
 
-    .brand-devops-icon svg {
-      width: 100%;
+    .brand-devops-img {
       height: 100%;
+      width: auto;
       display: block;
+      object-fit: contain;
+    }
+
+    html:not([data-theme="light"]) .brand-devops-light {
+      display: none !important;
+    }
+    html:not([data-theme="light"]) .brand-devops-dark {
+      display: block !important;
+    }
+    html[data-theme="light"] .brand-devops-dark {
+      display: none !important;
+    }
+    html[data-theme="light"] .brand-devops-light {
+      display: block !important;
     }
 
     .brand-text-wrap {
@@ -1741,28 +1756,8 @@
     <div class="container navbar-inner">
       <a href="#hero" class="brand-logo" aria-label="João Araújo - DevOps & SRE Engineer">
         <div class="brand-devops-icon" aria-hidden="true">
-          <svg viewBox="0 0 100 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="devopsGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#06b6d4"/>
-                <stop offset="50%" stop-color="#6366f1"/>
-                <stop offset="100%" stop-color="#3b82f6"/>
-              </linearGradient>
-            </defs>
-            <!-- DevOps Infinity Loop -->
-            <path d="M 50 25 C 38 10, 14 10, 8 20 C 2 30, 14 40, 26 40 C 38 40, 46 30, 50 25 C 54 20, 62 10, 74 10 C 86 10, 98 20, 92 30 C 86 40, 62 40, 50 25 Z" 
-                  stroke="url(#devopsGrad)" 
-                  stroke-width="5.5" 
-                  stroke-linecap="round" 
-                  stroke-linejoin="round"/>
-            <!-- CI/CD Stage Nodes -->
-            <circle cx="20" cy="15" r="2.8" fill="#06b6d4"/>
-            <circle cx="8" cy="25" r="2.8" fill="#22d3ee"/>
-            <circle cx="20" cy="35" r="2.8" fill="#818cf8"/>
-            <circle cx="80" cy="15" r="2.8" fill="#6366f1"/>
-            <circle cx="92" cy="25" r="2.8" fill="#3b82f6"/>
-            <circle cx="80" cy="35" r="2.8" fill="#06b6d4"/>
-          </svg>
+          <img src="assets/devops-loop-dark.png" alt="DevOps Infinity Logo" class="brand-devops-img brand-devops-dark" width="73" height="34" />
+          <img src="assets/devops-loop-light.png" alt="DevOps Infinity Logo" class="brand-devops-img brand-devops-light" width="73" height="34" />
         </div>
         <div class="brand-text-wrap">
           <span class="brand-name">João Araújo</span>

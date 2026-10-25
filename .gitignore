@@ -6,4 +6,6 @@
 !README.md
 !LICENSE
 !.gitignore
+!assets/
+!assets/**
 

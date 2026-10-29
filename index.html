@@ -3887,7 +3887,7 @@
 
       // EmailJS OTP Dispatch Configuration
       // Configure with your keys from https://dashboard.emailjs.com
-      const EMAILJS_PUBLIC_KEY = window.EMAILJS_PUBLIC_KEY || localStorage.getItem('emailjs_public_key') || '';
+      const EMAILJS_PUBLIC_KEY = window.EMAILJS_PUBLIC_KEY || localStorage.getItem('emailjs_public_key') || 'ZUXg-zLHTMAg-LqnX';
       const EMAILJS_SERVICE_ID = window.EMAILJS_SERVICE_ID || localStorage.getItem('emailjs_service_id') || 'service_resume_otp';
       const EMAILJS_TEMPLATE_ID = window.EMAILJS_TEMPLATE_ID || localStorage.getItem('emailjs_template_id') || 'template_resume_otp';
 
@@ -4542,7 +4542,11 @@
           // Transition to Step 2
           transitionToStep2(emailVal, visitor, sendResult.devMode, otpCode);
           if (sendResult.devMode) {
-            showToast(currentLang === 'pt' ? 'ℹ️ Modo Teste: Código exibido na tela' : 'ℹ️ Test Mode: Code displayed on screen');
+            if (sendResult.error) {
+              showToast(currentLang === 'pt' ? '⚠️ Erro EmailJS: ' + sendResult.error : '⚠️ EmailJS Error: ' + sendResult.error);
+            } else {
+              showToast(currentLang === 'pt' ? 'ℹ️ Modo Teste: Código exibido na tela' : 'ℹ️ Test Mode: Code displayed on screen');
+            }
           } else {
             showToast(currentLang === 'pt' ? '✉️ Código de 6 dígitos enviado para ' + emailVal : '✉️ 6-digit verification code sent to ' + emailVal);
           }
@@ -4646,7 +4650,11 @@
           if (sendResult.success) {
             transitionToStep2(activeOtpEmail, activeVisitor, sendResult.devMode, newCode);
             if (sendResult.devMode) {
-              showToast(currentLang === 'pt' ? 'ℹ️ Novo código de teste gerado' : 'ℹ️ New test code generated');
+              if (sendResult.error) {
+                showToast(currentLang === 'pt' ? '⚠️ Erro EmailJS: ' + sendResult.error : '⚠️ EmailJS Error: ' + sendResult.error);
+              } else {
+                showToast(currentLang === 'pt' ? 'ℹ️ Novo código de teste gerado' : 'ℹ️ New test code generated');
+              }
             } else {
               showToast(currentLang === 'pt' ? '✉️ Novo código enviado para ' + activeOtpEmail : '✉️ New code sent to ' + activeOtpEmail);
             }

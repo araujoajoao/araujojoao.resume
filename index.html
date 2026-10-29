@@ -1289,7 +1289,7 @@
       display: flex;
       align-items: center;
       gap: 0.6rem;
-      z-index: 1000;
+      z-index: 20000;
       transform: translateY(100px);
       opacity: 0;
       pointer-events: none;
@@ -1533,6 +1533,62 @@
       color: var(--accent-cyan);
       font-weight: 600;
       word-break: break-all;
+    }
+
+    .otp-demo-card {
+      margin-top: 0.85rem;
+      padding: 0.85rem 1rem;
+      background: rgba(6, 182, 212, 0.08);
+      border: 1px dashed rgba(6, 182, 212, 0.35);
+      border-radius: var(--radius-md);
+    }
+
+    .otp-demo-header {
+      margin-bottom: 0.4rem;
+    }
+
+    .otp-demo-pill {
+      font-size: 0.72rem;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-cyan);
+      background: rgba(6, 182, 212, 0.15);
+      padding: 0.2rem 0.55rem;
+      border-radius: var(--radius-full);
+      display: inline-block;
+    }
+
+    .otp-demo-text {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.45;
+      margin-bottom: 0.65rem;
+    }
+
+    .otp-demo-code-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      background: var(--bg-surface);
+      padding: 0.5rem 0.85rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .otp-demo-code-val {
+      font-family: var(--font-mono);
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--accent-cyan);
+      letter-spacing: 0.18em;
+    }
+
+    .btn-xs {
+      padding: 0.32rem 0.65rem;
+      font-size: 0.78rem;
     }
 
     .otp-code-input {
@@ -3481,9 +3537,32 @@
       <form id="otpForm" class="modal-form" style="display: none;" onsubmit="return false;">
         <div class="otp-notice-box">
           <p id="otpSentNotice">
-            <span lang="en">A 6-digit code was sent to <strong id="otpTargetEmail"></strong>. Please check your inbox or spam folder:</span>
-            <span lang="pt">Enviamos um código de 6 dígitos para <strong id="otpTargetEmail"></strong>. Verifique sua caixa de entrada ou spam:</span>
+            <span lang="en">A 6-digit code was sent to <strong class="otp-target-email"></strong>. Please check your inbox or spam folder:</span>
+            <span lang="pt">Enviamos um código de 6 dígitos para <strong class="otp-target-email"></strong>. Verifique sua caixa de entrada ou spam:</span>
           </p>
+
+          <div class="otp-demo-card" id="otpDemoCard" style="display: none;">
+            <div class="otp-demo-header">
+              <span class="otp-demo-pill">
+                <span lang="en">Test Mode / Setup Required</span>
+                <span lang="pt">Modo de Teste / Configuração</span>
+              </span>
+            </div>
+            <p class="otp-demo-text">
+              <span lang="en">Real email dispatch requires EmailJS keys. For this test session, use the code below:</span>
+              <span lang="pt">O envio de e-mails para a caixa de entrada requer as chaves do EmailJS. Para este teste, use o código abaixo:</span>
+            </p>
+            <div class="otp-demo-code-box">
+              <span class="otp-demo-code-val" id="otpDemoCodeDisplay">------</span>
+              <button type="button" class="btn btn-outline btn-xs" id="otpAutoFillBtn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span lang="en">Auto-fill Code</span>
+                <span lang="pt">Preencher Código</span>
+              </button>
+            </div>
+          </div>
         </div>
 
         <div class="form-group">
@@ -3795,7 +3874,10 @@
 
       // Step 2 OTP Modal elements
       const otpForm = document.getElementById('otpForm');
-      const otpTargetEmail = document.getElementById('otpTargetEmail');
+      const otpTargetEmails = document.querySelectorAll('.otp-target-email');
+      const otpDemoCard = document.getElementById('otpDemoCard');
+      const otpDemoCodeDisplay = document.getElementById('otpDemoCodeDisplay');
+      const otpAutoFillBtn = document.getElementById('otpAutoFillBtn');
       const otpCodeInput = document.getElementById('otpCodeInput');
       const otpCountdown = document.getElementById('otpCountdown');
       const verifyOtpBtn = document.getElementById('verifyOtpBtn');
@@ -3804,10 +3886,10 @@
       const changeEmailBtn = document.getElementById('changeEmailBtn');
 
       // EmailJS OTP Dispatch Configuration
-      // Set your keys from https://dashboard.emailjs.com
-      const EMAILJS_PUBLIC_KEY = window.EMAILJS_PUBLIC_KEY || '';
-      const EMAILJS_SERVICE_ID = window.EMAILJS_SERVICE_ID || 'service_resume_otp';
-      const EMAILJS_TEMPLATE_ID = window.EMAILJS_TEMPLATE_ID || 'template_resume_otp';
+      // Configure with your keys from https://dashboard.emailjs.com
+      const EMAILJS_PUBLIC_KEY = window.EMAILJS_PUBLIC_KEY || localStorage.getItem('emailjs_public_key') || '';
+      const EMAILJS_SERVICE_ID = window.EMAILJS_SERVICE_ID || localStorage.getItem('emailjs_service_id') || 'service_resume_otp';
+      const EMAILJS_TEMPLATE_ID = window.EMAILJS_TEMPLATE_ID || localStorage.getItem('emailjs_template_id') || 'template_resume_otp';
 
       if (window.emailjs && EMAILJS_PUBLIC_KEY) {
         try {
@@ -3993,6 +4075,7 @@
         activeVisitor = '';
         if (verifyForm) verifyForm.style.display = 'block';
         if (otpForm) otpForm.style.display = 'none';
+        if (otpDemoCard) otpDemoCard.style.display = 'none';
         if (confirmRevealBtn) confirmRevealBtn.disabled = false;
         if (verifyOtpBtn) verifyOtpBtn.disabled = false;
         if (modalDesc) {
@@ -4000,14 +4083,36 @@
         }
       }
 
-      function transitionToStep2(email, visitor) {
+      function transitionToStep2(email, visitor, isDevMode = false, code = '') {
         if (verifyForm) verifyForm.style.display = 'none';
         if (otpForm) otpForm.style.display = 'block';
-        if (otpTargetEmail) otpTargetEmail.textContent = email;
+        if (otpTargetEmails && otpTargetEmails.length) {
+          otpTargetEmails.forEach(el => {
+            el.textContent = email;
+          });
+        }
         if (otpCodeInput) {
           otpCodeInput.value = '';
           otpCodeInput.classList.remove('input-error');
         }
+
+        // Show test code card if in dev/demo mode
+        if (isDevMode && otpDemoCard) {
+          otpDemoCard.style.display = 'block';
+          if (otpDemoCodeDisplay) otpDemoCodeDisplay.textContent = code;
+          if (otpAutoFillBtn) {
+            otpAutoFillBtn.onclick = () => {
+              if (otpCodeInput) {
+                otpCodeInput.value = code;
+                otpCodeInput.focus();
+                showToast(currentLang === 'pt' ? '✅ Código preenchido automaticamente!' : '✅ Code auto-filled!');
+              }
+            };
+          }
+        } else if (otpDemoCard) {
+          otpDemoCard.style.display = 'none';
+        }
+
         if (modalDesc) {
           modalDesc.innerHTML = '<span lang="en">Check your inbox for the 6-digit code sent to your email to verify ownership.</span><span lang="pt">Verifique sua caixa de entrada para o código de 6 dígitos enviado ao seu e-mail para validar a posse.</span>';
         }
@@ -4060,16 +4165,16 @@
               otp_code: code,
               sent_time: new Date().toLocaleTimeString()
             });
-            return { success: true };
+            return { success: true, devMode: false };
           } catch (err) {
             console.error('EmailJS send error:', err);
-            return { success: false, error: err.text || err.message };
+            // On real send failure, fall back to devMode with code displayed so visitor is never locked out
+            return { success: true, devMode: true, error: err.text || err.message };
           }
         } else {
-          // Dev / Preview mode fallback
+          // Dev / Preview mode fallback when EmailJS keys are not yet configured
           console.log('%c[OTP DEV MODE] Verification Code for ' + toEmail + ': ' + code, 'color: #06b6d4; font-size: 14px; font-weight: bold;');
-          await new Promise(r => setTimeout(r, 600));
-          showToast('✉️ [EmailJS Dev] Código gerado para ' + toEmail + ': ' + code);
+          await new Promise(r => setTimeout(r, 400));
           return { success: true, devMode: true };
         }
       }
@@ -4425,8 +4530,12 @@
           if (confirmRevealBtnText) confirmRevealBtnText.innerHTML = originalBtnHTML;
 
           // Transition to Step 2
-          transitionToStep2(emailVal, visitor);
-          showToast(currentLang === 'pt' ? '✉️ Código de 6 dígitos enviado para ' + emailVal : '✉️ 6-digit verification code sent to ' + emailVal);
+          transitionToStep2(emailVal, visitor, sendResult.devMode, otpCode);
+          if (sendResult.devMode) {
+            showToast(currentLang === 'pt' ? 'ℹ️ Modo Teste: Código exibido na tela' : 'ℹ️ Test Mode: Code displayed on screen');
+          } else {
+            showToast(currentLang === 'pt' ? '✉️ Código de 6 dígitos enviado para ' + emailVal : '✉️ 6-digit verification code sent to ' + emailVal);
+          }
         });
       }
 
@@ -4525,8 +4634,12 @@
           showToast(currentLang === 'pt' ? '⏳ Reenviando código...' : '⏳ Resending code...');
           const sendResult = await sendOtpEmail(activeVisitor, activeOtpEmail, newCode);
           if (sendResult.success) {
-            showToast(currentLang === 'pt' ? '✉️ Novo código enviado para ' + activeOtpEmail : '✉️ New code sent to ' + activeOtpEmail);
-            transitionToStep2(activeOtpEmail, activeVisitor);
+            transitionToStep2(activeOtpEmail, activeVisitor, sendResult.devMode, newCode);
+            if (sendResult.devMode) {
+              showToast(currentLang === 'pt' ? 'ℹ️ Novo código de teste gerado' : 'ℹ️ New test code generated');
+            } else {
+              showToast(currentLang === 'pt' ? '✉️ Novo código enviado para ' + activeOtpEmail : '✉️ New code sent to ' + activeOtpEmail);
+            }
           } else {
             showToast(currentLang === 'pt' ? '❌ Falha ao reenviar código.' : '❌ Failed to resend code.');
             resendOtpBtn.disabled = false;

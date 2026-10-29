@@ -68,7 +68,7 @@ Specialized in end-to-end **Observability & SRE** (Datadog APM, Prometheus, Graf
 Para proteção de privacidade contra spambots e scrapers automatizados, os contatos diretos (e-mail e telefone) estão sob verificação humana no portfólio interativo:
 
 * **Portfólio com Acesso Seguro:** [araujoajoao.github.io/araujojoao.resume](https://araujoajoao.github.io/araujojoao.resume/#contact) 🔐
-* **LinkedIn:** [linkedin.com/in/araujojoao84](https://www.linkedin.com/in/araujojoao84/)
+* **LinkedIn:** [linkedin.com/in/joao-araujo-cloud](https://www.linkedin.com/in/joao-araujo-cloud/)
 * **GitHub:** [github.com/araujoajoao](https://github.com/araujoajoao)
 
 ---

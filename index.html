@@ -3575,8 +3575,8 @@
 
         <div class="otp-timer-wrap">
           <span id="otpTimerText">
-            <span lang="en">Code expires in <span id="otpCountdown">05:00</span></span>
-            <span lang="pt">O código expira em <span id="otpCountdown">05:00</span></span>
+            <span lang="en">Code expires in <span class="otp-countdown">05:00</span></span>
+            <span lang="pt">O código expira em <span class="otp-countdown">05:00</span></span>
           </span>
         </div>
 
@@ -3879,7 +3879,7 @@
       const otpDemoCodeDisplay = document.getElementById('otpDemoCodeDisplay');
       const otpAutoFillBtn = document.getElementById('otpAutoFillBtn');
       const otpCodeInput = document.getElementById('otpCodeInput');
-      const otpCountdown = document.getElementById('otpCountdown');
+      const otpCountdowns = document.querySelectorAll('.otp-countdown');
       const verifyOtpBtn = document.getElementById('verifyOtpBtn');
       const verifyOtpBtnText = document.getElementById('verifyOtpBtnText');
       const resendOtpBtn = document.getElementById('resendOtpBtn');
@@ -4073,6 +4073,11 @@
         activeOtp = null;
         activeOtpEmail = '';
         activeVisitor = '';
+        if (otpCountdowns && otpCountdowns.length) {
+          otpCountdowns.forEach(el => {
+            el.textContent = '05:00';
+          });
+        }
         if (verifyForm) verifyForm.style.display = 'block';
         if (otpForm) otpForm.style.display = 'none';
         if (otpDemoCard) otpDemoCard.style.display = 'none';
@@ -4123,7 +4128,12 @@
           const remainingSec = Math.max(0, Math.floor((otpExpiresAt - Date.now()) / 1000));
           const mins = String(Math.floor(remainingSec / 60)).padStart(2, '0');
           const secs = String(remainingSec % 60).padStart(2, '0');
-          if (otpCountdown) otpCountdown.textContent = mins + ':' + secs;
+          const timeStr = mins + ':' + secs;
+          if (otpCountdowns && otpCountdowns.length) {
+            otpCountdowns.forEach(el => {
+              el.textContent = timeStr;
+            });
+          }
           if (remainingSec <= 0) {
             clearInterval(otpCountdownTimer);
             if (verifyOtpBtn) verifyOtpBtn.disabled = true;

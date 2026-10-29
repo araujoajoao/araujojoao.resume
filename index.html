@@ -3888,7 +3888,7 @@
       // EmailJS OTP Dispatch Configuration
       // Configure with your keys from https://dashboard.emailjs.com
       const EMAILJS_PUBLIC_KEY = window.EMAILJS_PUBLIC_KEY || localStorage.getItem('emailjs_public_key') || 'ZUXg-zLHTMAg-LqnX';
-      const EMAILJS_SERVICE_ID = window.EMAILJS_SERVICE_ID || localStorage.getItem('emailjs_service_id') || 'service_resume_otp';
+      const EMAILJS_SERVICE_ID = window.EMAILJS_SERVICE_ID || localStorage.getItem('emailjs_service_id') || 'service_da7qxqd';
       const EMAILJS_TEMPLATE_ID = window.EMAILJS_TEMPLATE_ID || localStorage.getItem('emailjs_template_id') || 'template_resume_otp';
 
       if (window.emailjs && EMAILJS_PUBLIC_KEY) {
@@ -4171,8 +4171,17 @@
           try {
             await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
               to_name: toName,
+              name: toName,
+              user_name: toName,
               to_email: toEmail,
+              email: toEmail,
+              user_email: toEmail,
+              recipient: toEmail,
               otp_code: code,
+              code: code,
+              otp: code,
+              verification_code: code,
+              message: 'Seu código de acesso é: ' + code,
               sent_time: new Date().toLocaleTimeString()
             });
             return { success: true, devMode: false };
